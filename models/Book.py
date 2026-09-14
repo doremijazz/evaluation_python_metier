@@ -3,6 +3,7 @@ from datetime import date
 
 
 class Book:
+    id : int
     title: str
     author: Author
     resume: str

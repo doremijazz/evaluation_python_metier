@@ -1,9 +1,11 @@
+from typing import ClassVar
+
 from models import Author
 from datetime import date
 
 
 class Book:
-    id : int
+    id :  ClassVar[int] = 0
     title: str
     author: Author
     resume: str
@@ -13,6 +15,9 @@ class Book:
     nb_pages : int
     isbn : int
     price : float
+
+    def _post_init__(self):
+        self.id +=1
 
     def _str_(self):
         return  (f"{self.title} by {self.author} editing by {self.editeur} published on {self.publish_date},\n"

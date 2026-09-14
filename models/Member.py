@@ -6,10 +6,12 @@ from models.User import User
 
 @dataclass
 class Member(User):
-    def __init__(self,username:str,password:str,email:str):
-        super().__init__(username,password,email)
-        member_id: ClassVar[int] = 0
-        member_nbr: int = field(init=False)
+    member_id: ClassVar[int] = 0
+    member_nbr: int = field(init=False)
+    def __post_init__(self):
+        self.member_id = self.member_id+1
+        self.member_nbr = self.member_id
+
 
     def vote(self,books:list[Book]):
         pass

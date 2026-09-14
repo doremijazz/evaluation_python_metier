@@ -12,6 +12,10 @@ class User(Person):
     password: str
     statut : str
 
+    def __post_init__(self):
+        self.user_id += 1
+        self.user_nbr = self.user_id
+
     def display(self):
         person_str = super().__str__()
         print(f"Utilisateur : {person_str}.")

@@ -5,7 +5,7 @@ from models.Book import Book
 from models.User import User
 
 @dataclass
-class president(User):
+class President(User):
 
     def display(self):
         print(f" ID: {self.user_id}")

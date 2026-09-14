@@ -22,3 +22,7 @@ class User(Person):
 
     def connect(self):
         pass
+
+    def __str__(self):
+        person_str = super().__str__()
+        return f"Utilisateur : {person_str}. \n email :{self.email}, \n statut : {self.statut}"

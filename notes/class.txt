@@ -1,0 +1,23 @@
+Class livre :
+	Titre
+	Résumé
+	Auteur
+	Editeur
+	Perso Principal
+	date
+	nb pages
+	ISBN
+	Prix
+
+class auteur : 
+	nom
+	prenom
+	age
+	biographie
+
+
+class users :
+	nom
+	prenom
+	age
+	statut

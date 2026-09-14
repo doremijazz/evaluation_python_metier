@@ -8,10 +8,18 @@ from models.User import User
 class Member(User):
     member_id: ClassVar[int] = 0
     member_nbr: int = field(init=False)
-    def __post_init__(self):
-        self.member_id = self.member_id+1
-        self.member_nbr = self.member_id
 
 
-    def vote(self,books:list[Book]):
-        pass
+    def vote(self,books:list[Book], nbr: int)-> list[Book]:
+        selected_books = []
+        while nbr > 0:
+            for book in books:
+                print(book.id)
+                print(book)
+            id_book = input("Saisir l'ID du livre")
+            id_book = int(id_book)
+            selected_books.append(book for book in books if book.id == id_book)
+            nbr -= 1
+            books.remove(book)
+        return selected_books
+

@@ -1,0 +1,5 @@
+Afficher les livres (1er, 2éme, 3éme tours)
+Appartient a la sélection (2éme et 3éme tours)
+Saisie des votes par le président du jury
+Afficher les membres du jury
+Bonus : authentification

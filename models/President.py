@@ -6,14 +6,26 @@ from models.User import User
 
 @dataclass
 class president(User):
-    def __init__(self,username:str,password:str,email:str):
-        super().__init__(username,password,email)
 
     def display(self):
-        pass
+        print(f" ID: {self.user_id}")
+        print(f" Surname: {self.last_name}")
+        print(f" Name: {self.first_name}")
+        print(f" Email: {self.email}")
 
-    def enter_vote(self) -> list[Book]:
-        pass
 
-    def announce_vote(books : list[Book]):
+
+    def enter_vote(books : list[Book]) -> list[Book]:
+        book_votes = dict
+        book_selec = list[Book]
+        for book in books:
+            print(book)
+            vote = input("Saisie le nombre de vote")
+            book_votes[book] = book_votes.get(book, vote) + 1
+        book_votes = dict(sorted(book_votes.items(), key=lambda item: item[1], reverse=True))
+        for book in book_votes:
+            book_selec.append(book_votes[book])
+        return book_selec
+
+    def announce_vote(books : list[Book]) -> list[Book]:
         pass

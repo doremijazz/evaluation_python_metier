@@ -27,5 +27,11 @@ class president(User):
             book_selec.append(book_votes[book])
         return book_selec
 
-    def announce_vote(books : list[Book]) -> list[Book]:
-        pass
+    def announce_vote(books : list[Book], nb : int) -> list[Book]:
+        book_announce = list[Book]
+        while len(book_announce) < nb:
+            for book in books:
+                choice = input("Saisie le choix de vote o/n")
+                if choice == "o":
+                    book_announce.append(book)
+        return book_announce

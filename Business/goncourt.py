@@ -8,6 +8,7 @@ from dataclasses import dataclass, field
 from datetime import date, datetime
 from typing import Optional
 
+from daos.author_dao import AuthorDao
 from models.President import President
 from models.User import User
 from models.Author import Author
@@ -37,6 +38,10 @@ class Goncourt:
 
     def add_member(self,member:Member):
         self.members.append(member)
+
+    def get_author(author_nbr : int)->Optional[Author]:
+        author_dao : AuthorDao = AuthorDao()
+        return author_dao.read(author_nbr)
 
     def init_static(self):
         """Initialisation du static de l'application de gestion"""

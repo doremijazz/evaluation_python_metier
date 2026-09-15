@@ -3,7 +3,7 @@
 """
 Classe abstraite Person, mère de Student et Teacher
 """
-from abc import ABC
+from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from typing import ClassVar
 
@@ -15,6 +15,7 @@ class Person(ABC):
     last_name: str
     age: int
 
+    @abstractmethod
     def display(self):
         pass
 

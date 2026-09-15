@@ -6,15 +6,15 @@ from models.Author import Author
 
 class AuthorDao(Dao[Author]):
     def create(self, author : Author) -> int:
-        id_author : Optional[int]=None
+        id_author : Optional[int]
         id_person : int
         try:
             with Dao.connection.cursor() as cursor:
-                sql_person ="INSERT INTO person (p_surname, p_name, p_age) VALUES (%s, %s, %s)"
+                sql_person ="INSERT INTO pg_person (p_surname, p_name, p_age) VALUES (%s, %s, %s)"
                 cursor.execute(sql_person, (author.last_name, author.first_name, author.age))
                 id_person = cursor.lastrowid
 
-                sql_author ="INSERT INTO author (aut_bio, p_ID_person) VALUES (%s, %s, %s)"
+                sql_author ="INSERT INTO pg_author (aut_bio, p_ID_person) VALUES (%s, %s, %s)"
                 cursor.execute(sql_author,(author.biography, id_person))
                 id_author = cursor.lastrowid
 

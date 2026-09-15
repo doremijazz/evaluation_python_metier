@@ -65,7 +65,7 @@ class AuthorDao(Dao[Author]):
         try :
             with Dao.connection.cursor() as cursor:
                 sql_person ="UPDATE pg_person P JOIN pg_author A ON A.p_ID_person = P.p_ID_person SET P.p_surname = %s, P.p_name = %s, P.p_age = %s, A.aut_bio = % WHERE A.aut_ID_auteur = %s"
-                cursor.execute(sql_person, (author.last_name, author.first_name, author.age, author.biography))
+                cursor.execute(sql_person, (author.last_name, author.first_name, author.age, author.biography, author.author_id))
                 Dao.connection.commit()
                 return True
         except Exception as e :

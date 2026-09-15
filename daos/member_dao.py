@@ -54,7 +54,7 @@ class MemberDao(Dao[Member]):
         member_list : list[Member] = []
         try:
             with Dao.connection.cursor() as cursor:
-                sql = "SELECT * FROM pg_author A INNER JOIN pg_person P on A.p_ID_person = P.p_ID_person"
+                sql = "SElECT * FROM pg_member M INNER JOIN pg_user U ON U.u_ID_user = M.u_ID_user INNER JOIN pg_person P ON U.p_ID_person = P.p_ID_person"
                 cursor.execute(sql)
                 records = cursor.fetchall()
                 for record in records:
@@ -62,8 +62,16 @@ class MemberDao(Dao[Member]):
                 return member_list
         except Exception as e:
             print(f"Erreur lors de la lecture des membres : {e}")
-        
+
     def update(self, member: Member) -> bool:
-        pass
+        try:
+            with Dao.connection.cursor() as cursor:
+                sql_person = ("UPDATE pg_person P JOIN pg_user U ON U.p_ID_person = P.p_ID_person JOIN "
+                              "pg_member ON U.u_ID_user = M.u_ID_user SET P.p_surname = %s, "
+                              "P.p_name = %s, P.p_age = %s, U.u_email = %s, U.u_pasword = %s, U.u_statut = %s "
+                              " WHERE M.m_ID_membre = %s")
+                cursor.execute(sql_person, (member.last_name, member.first_name, member.age, member.email, member.password, member.statut, member.member_nbr))
+
+
     def delete(self, member: Member) -> bool:
         pass

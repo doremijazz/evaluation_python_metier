@@ -36,7 +36,20 @@ class MemberDao(Dao[Member]):
         return member
 
     def read(self, member_id: int) -> Member:
-        pass
+        member : Optional[Member]
+        try:
+            with Dao.connection.cursor() as cursor:
+                sql_person = "SELECT * FROM pg_member M INNER JOIN pg_user U ON U.u_ID_user = M.u_ID_user INNER JOIN pg_person P ON U.p_ID_person = P.p_ID_person WHERE M.m_ID_membre = %s"
+                cursor.execute(sql_person, (member_id,))
+                record = cursor.fetchone()
+                if record is not None:
+                    member = self.member_from_db(record)
+                else :
+                    member = None
+                return member
+        except Exception as e:
+            print(f"Erreur lors de la création du membre : {e}")
+
     def readAll(self) -> list[Member]:
         pass
     def update(self, member: Member) -> bool:

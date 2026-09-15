@@ -11,9 +11,12 @@ from typing import ClassVar
 @dataclass
 class Person(ABC):
     """Person liée au concours : président ou membre ou auteur"""
-    first_name: ClassVar[str] = field(init=False)
-    last_name: ClassVar[str] = field(init=False)
-    age: ClassVar[int] = field(init=False)
+    first_name: str
+    last_name: str
+    age: int
 
     def display(self):
         pass
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}, {self.age} ans"

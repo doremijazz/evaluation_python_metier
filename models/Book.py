@@ -1,10 +1,10 @@
-from dataclasses import field
+from dataclasses import field, dataclass
 from typing import ClassVar
 
 from models import Author
 from datetime import date
 
-
+@dataclass
 class Book:
     id :  ClassVar[int] = 0
     book_nbr : int = field(init=False)

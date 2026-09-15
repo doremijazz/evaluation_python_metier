@@ -1,6 +1,9 @@
 from Business.goncourt import Goncourt
 
 def main() -> None:
-    goncourt : goncourt = Goncourt()
+    goncourt : Goncourt = Goncourt()
 
     goncourt.init_static()
+
+if __name__ == "__main__":
+    main()

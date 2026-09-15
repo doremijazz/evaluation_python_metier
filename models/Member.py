@@ -9,9 +9,14 @@ class Member(User):
     member_id: ClassVar[int] = 0
     member_nbr: int = field(init=False)
 
+    def __post_init__(self):
+        super().__post_init__()
+        Member.member_id += 1
+        self.member_nbr = Member.member_id
+
     def display(self):
         person_str = super().__str__()
-        print(f"Member_ID : {self.member_id}, Information : {person_str}")
+        print(f"Member_ID : {self.member_nbr}, \nInformation : {person_str}")
 
 
     def vote(self,books:list[Book], nbr: int)-> list[Book]:

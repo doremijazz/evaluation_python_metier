@@ -40,7 +40,7 @@ class Goncourt:
 
     def init_static(self):
         """Initialisation du static de l'application de gestion"""
-        president = President("Dedier", "DECOIN", 81)
-        francoise : Member = Member("Francoise", "Chandernagor", 81)
-        tahar : Member = Member("Tahar Ben", "Jelloun", 81)
+        president = President("Dedier", "DECOIN", 81, "dedier@gncourt.fr", "1234", "President")
+        francoise : Member = Member("Francoise", "Chandernagor", 81, "francoise@goncourt.fr", "1234", "Member")
+        tahar : Member = Member("Tahar Ben", "Jelloun", 81, "taharben@goncourt.fr", "1234", "Member")
         francoise.display()

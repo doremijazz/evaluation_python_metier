@@ -13,8 +13,8 @@ class User(Person):
     statut : str
 
     def __post_init__(self):
-        self.user_id += 1
-        self.user_nbr = self.user_id
+        User.user_id += 1
+        self.user_nbr = User.user_id
 
     def display(self):
         person_str = super().__str__()
@@ -29,4 +29,4 @@ class User(Person):
 
     def __str__(self):
         person_str = super().__str__()
-        return f"Utilisateur : {person_str}. \n email :{self.email}, \n statut : {self.statut}"
+        return f"{person_str}. \nemail :{self.email}, \nstatut : {self.statut}"

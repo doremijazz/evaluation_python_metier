@@ -374,7 +374,7 @@ VALUES
     26,
     'Bataille au procès',
     'En 1956, Georges Bataille doit répondre de son œuvre devant la justice. Le roman met en scène le procès, les débats autour de la
-     liberté littéraire et l''affrontement entre création artistique et morale publique.',
+  liberté littéraire et l''affrontement entre création artistique et morale publique.',
     'Georges Bataille, les magistrats, les témoins',
     192,
     '2862313599',

@@ -59,3 +59,19 @@ class AuthorDao(Dao[Author]):
         except Exception as e :
             print(f"Erreur lors de la lecture de tous les auteurs : {e}")
 
+    def update(self, author : Author) -> bool:
+        try :
+            with Dao.connection.cursor() as cursor:
+                sql_person ="UPDATE pg_person P JOIN pg_author A ON A.p_ID_person = P.p_ID_person SET P.p_surname = %s, P.p_name = %s, P.p_age = %s, A.aut_bio = % WHERE A.aut_ID_auteur = %s"
+                cursor.execute(sql_person, (author.last_name, author.first_name, author.age, author.biography))
+                Dao.connection.commit()
+                return True
+        except Exception as e :
+            print(f"Erreur lors de la modification de l'auteur : {e}")
+            Dao.connection.rollback()
+            return False
+
+
+    def delete(self, author : Author) -> bool:
+
+        ...

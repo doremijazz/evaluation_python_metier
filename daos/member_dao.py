@@ -71,7 +71,10 @@ class MemberDao(Dao[Member]):
                               "P.p_name = %s, P.p_age = %s, U.u_email = %s, U.u_pasword = %s, U.u_statut = %s "
                               " WHERE M.m_ID_membre = %s")
                 cursor.execute(sql_person, (member.last_name, member.first_name, member.age, member.email, member.password, member.statut, member.member_nbr))
-
+                return True
+        except Exception as e:
+            print(f"Erreur lors de la mise ajour du membre : {e}")
+            return False
 
     def delete(self, member: Member) -> bool:
         try:

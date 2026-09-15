@@ -15,7 +15,7 @@ class Book:
     editeur : str
     pp : list[str]
     nb_pages : int
-    isbn : int
+    isbn : str
     price : float
 
     def __post_init__(self):

@@ -25,7 +25,7 @@ class AuthorDao(Dao[Author]):
             Dao.connection.rollback()
             return 0
 
-    def author_from_db(record)->Author:
+    def author_from_db(self, record)->Author:
         author: Author = Author(record['p_surname'], record['p_name'], record['p_age'], record["aut_bio"])
         return author
 
@@ -78,7 +78,7 @@ class AuthorDao(Dao[Author]):
                 sql_slect_person = "SELECT P.p_ID_person FORM pg_person INNER JOIN pg_auteur P on P.p_ID_person = A.p_ID_person WHERE A.aut_ID_auteur = %s"
                 cursor.execute(sql_slect_person,(author.author_nbr,))
                 record = cursor.fetchone()
-                id_person = int = record["id_person"]
+                id_person : int = record["id_person"]
 
                 sql_author = "DELETE FROM pg_author  WHERE A.aut_ID_auteur = %s"
                 cursor.execute(sql_author,(author.author_nbr,))
@@ -92,6 +92,6 @@ class AuthorDao(Dao[Author]):
             print(f"Erreur lors de la suppression de l'auteur : {e}")
             Dao.connection.rollback()
             return False
-        
+
 
         ...

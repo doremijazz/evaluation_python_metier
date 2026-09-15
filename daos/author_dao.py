@@ -73,5 +73,25 @@ class AuthorDao(Dao[Author]):
 
 
     def delete(self, author : Author) -> bool:
+        try :
+            with Dao.connection.cursor() as cursor:
+                sql_slect_person = "SELECT P.p_ID_person FORM pg_person INNER JOIN pg_auteur P on P.p_ID_person = A.p_ID_person WHERE A.aut_ID_auteur = %s"
+                cursor.execute(sql_slect_person,(author.author_nbr,))
+                record = cursor.fetchone()
+                id_person = int = record["id_person"]
+
+                sql_author = "DELETE FROM pg_author  WHERE A.aut_ID_auteur = %s"
+                cursor.execute(sql_author,(author.author_nbr,))
+
+                sql_person = "DELETE FROM pg_person  WHERE P.p_ID_person = %s"
+                cursor.execute(sql_person,(id_person,))
+
+                Dao.connection.commit()
+                return True
+        except Exception as e :
+            print(f"Erreur lors de la suppression de l'auteur : {e}")
+            Dao.connection.rollback()
+            return False
+        
 
         ...

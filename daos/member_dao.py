@@ -31,6 +31,9 @@ class MemberDao(Dao[Member]):
             Dao.connection.rollback()
             return 0
 
+    def member_from_db(self, record)-> Member:
+        member : Member = Member(record['p_surname'], record['p_name'], record['p_age'], record['u_emal'], record['u_pasword'], record['u_statut'] )
+        return member
 
     def read(self, member_id: int) -> Member:
         pass

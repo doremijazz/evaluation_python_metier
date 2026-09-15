@@ -51,7 +51,18 @@ class MemberDao(Dao[Member]):
             print(f"Erreur lors de la création du membre : {e}")
 
     def readAll(self) -> list[Member]:
-        pass
+        member_list : list[Member] = []
+        try:
+            with Dao.connection.cursor() as cursor:
+                sql = "SELECT * FROM pg_author A INNER JOIN pg_person P on A.p_ID_person = P.p_ID_person"
+                cursor.execute(sql)
+                records = cursor.fetchall()
+                for record in records:
+                    member_list.append(self.member_from_db(record))
+                return member_list
+        except Exception as e:
+            print(f"Erreur lors de la lecture des membres : {e}")
+        
     def update(self, member: Member) -> bool:
         pass
     def delete(self, member: Member) -> bool:

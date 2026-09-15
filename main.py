@@ -12,5 +12,7 @@ def main() -> None:
     for member in goncourt.members:
         member.display()
 
+    goncourt.test_author_dao()
+
 if __name__ == "__main__":
     main()

@@ -2,6 +2,7 @@ from typing import Optional
 
 from daos.dao import Dao
 from models.Author import Author
+from models.Person import Person
 
 
 class AuthorDao(Dao[Author]):
@@ -13,8 +14,9 @@ class AuthorDao(Dao[Author]):
                 sql_person ="INSERT INTO pg_person (p_surname, p_name, p_age) VALUES (%s, %s, %s)"
                 cursor.execute(sql_person, (author.last_name, author.first_name, author.age))
                 id_person = cursor.lastrowid
+                Person.id_person = id_person
 
-                sql_author ="INSERT INTO pg_author (aut_bio, p_ID_person) VALUES (%s, %s, %s)"
+                sql_author ="INSERT INTO pg_auteur (aut_bio, p_ID_person) VALUES (%s, %s)"
                 cursor.execute(sql_author,(author.biography, id_person))
                 id_author = cursor.lastrowid
 
@@ -75,16 +77,26 @@ class AuthorDao(Dao[Author]):
     def delete(self, author : Author) -> bool:
         try :
             with Dao.connection.cursor() as cursor:
-                sql_slect_person = "SELECT P.p_ID_person FORM pg_person INNER JOIN pg_auteur P on P.p_ID_person = A.p_ID_person WHERE A.aut_ID_auteur = %s"
+                sql_slect_person = "SELECT P.p_ID_person FROM pg_person AS P INNER JOIN pg_auteur AS A on P.p_ID_person = A.p_ID_person WHERE A.aut_ID_auteur = %s"
                 cursor.execute(sql_slect_person,(author.author_nbr,))
                 record = cursor.fetchone()
-                id_person : int = record["id_person"]
+                id_person : int = record["p_ID_person"]
 
-                sql_author = "DELETE FROM pg_author  WHERE A.aut_ID_auteur = %s"
+                sql_author = "DELETE FROM pg_auteur  WHERE aut_ID_auteur = %s"
                 cursor.execute(sql_author,(author.author_nbr,))
 
-                sql_person = "DELETE FROM pg_person  WHERE P.p_ID_person = %s"
+                id_auteur = cursor.lastrowid
+                sql_increment_auteur = "ALTER TABLE pg_auteur AUTO_INCREMENT = %s;"
+                cursor.execute(sql_increment_auteur, (id_auteur,))
+
+                sql_person = "DELETE FROM pg_person  WHERE p_ID_person = %s"
                 cursor.execute(sql_person,(id_person,))
+
+                sql_max_person = "SELECT MAX(p_ID_person) AS max_id FROM pg_person;"
+                cursor.execute(sql_max_person)
+
+                sql_increment_person = "ALTER TABLE pg_person AUTO_INCREMENT = %s;"
+                cursor.execute(sql_increment_person, (id_person,))
 
                 Dao.connection.commit()
                 return True

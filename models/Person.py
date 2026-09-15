@@ -11,6 +11,8 @@ from typing import ClassVar
 @dataclass
 class Person(ABC):
     """Person liée au concours : président ou membre ou auteur"""
+    id_person: ClassVar[int] = 0
+    person_nbr:  int = field(init=False)
     first_name: str
     last_name: str
     age: int

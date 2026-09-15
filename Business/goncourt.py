@@ -8,7 +8,10 @@ from dataclasses import dataclass, field
 from datetime import date, datetime
 from typing import Optional
 
+from daos import author_dao
 from daos.author_dao import AuthorDao
+from daos.dao import Dao
+from models.Person import Person
 from models.President import President
 from models.User import User
 from models.Author import Author
@@ -42,6 +45,42 @@ class Goncourt:
     def get_author(author_nbr : int)->Optional[Author]:
         author_dao : AuthorDao = AuthorDao()
         return author_dao.read(author_nbr)
+
+    def initialize_person_counter(self) -> None:
+        with Dao.connection.cursor() as cursor:
+            sql = """
+                SELECT COALESCE(MAX(p_ID_person), 0) AS max_id_person
+                FROM pg_person
+            """
+
+            cursor.execute(sql)
+            record = cursor.fetchone()
+
+        Person.id_person = (record["max_id_person"]-1)
+
+    def initialize_author_counter(self) -> None:
+        with Dao.connection.cursor() as cursor:
+            sql = """
+                SELECT COALESCE(MAX(aut_ID_auteur), 0) AS max_id_auteur
+                FROM pg_auteur
+            """
+
+            cursor.execute(sql)
+            record = cursor.fetchone()
+
+        Author.author_id = record["max_id_auteur"]
+
+
+    def test_author_dao(self) -> None:
+        author_dao : AuthorDao = AuthorDao()
+
+        moi : Author = Author("anais", "binet", 26, "blablabla")
+        self.add_author(moi)
+        author_dao.create(moi)
+
+        author_dao.delete(moi)
+        Author.author_id -=1
+
 
     def init_static(self):
         """Initialisation du static de l'application de gestion"""

@@ -15,7 +15,7 @@ class President(User):
 
 
 
-    def enter_vote(books : list[Book]) -> list[Book]:
+    def enter_vote(self, books : list[Book]) -> list[Book]:
         book_votes = dict
         book_selec = list[Book]
         for book in books:
@@ -24,14 +24,14 @@ class President(User):
             book_votes[book] = book_votes.get(book, vote) + 1
         book_votes = dict(sorted(book_votes.items(), key=lambda item: item[1], reverse=True))
         for book in book_votes:
-            book_selec.append(book_votes[book])
+            book_selec.add(book_votes[book])
         return book_selec
 
-    def announce_vote(books : list[Book], nb : int) -> list[Book]:
+    def announce_vote(self, books : list[Book], nb : int) -> list[Book]:
         book_announce = list[Book]
         while len(book_announce) < nb:
             for book in books:
                 choice = input("Saisie le choix de vote o/n")
                 if choice == "o":
-                    book_announce.append(book)
+                    book_announce.add(book)
         return book_announce

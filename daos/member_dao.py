@@ -74,4 +74,43 @@ class MemberDao(Dao[Member]):
 
 
     def delete(self, member: Member) -> bool:
-        pass
+        try:
+            with Dao.connection.cursor() as cursor:
+                sql_selec_person = ("SELECT P.p_ID_person FROM pg_person AS P "
+                                    "INNER JOIN pg_user U ON U.p_ID_person = P.p_ID_person "
+                                    "INNER JOIN pg_membre M ON U.u_ID_user = M.u_ID_user "
+                                    "WHERE M.m_ID_membre = %s")
+                cursor.execute(sql_selec_person, (member.member_nbr,))
+                record = cursor.fetchone()
+                id_person : int = record["p_ID_person"]
+
+                sql_member = "DELETE FROM pg_membre WHERE m_ID_membre = %s"
+                cursor.execute(sql_member, (member.member_nbr,))
+                id_membre = cursor.lastrowid
+
+                sql_increment_member = "ALTER TABLE pg_membre AUTO_INCREMENT = %;"
+                cursor.execute(sql_increment_member, (id_membre,))
+
+                sql_user = "DELETE FROM pg_user WHERE p_ID_person = %s"
+                cursor.execute(sql_user, (id_person,))
+                id_user = cursor.lastrowid
+
+                sql_increment_user = "ALTER TABLE pg_user AUTO_INCREMENT = %;"
+                cursor.execute(sql_increment_user, (id_user,))
+
+                sql_person = "DELETE FROM pg_person WHERE p_ID_person = %s"
+                cursor.execute(sql_person, (id_person,))
+
+                sql_max_person = "SELECT MAX(p_ID_person) AS max_id FROM pg_person;"
+                cursor.execute(sql_max_person)
+                id_person_max = cursor.lastrowid
+
+                sql_increment_person = "ALTER TABLE pg_person AUTO_INCREMENT = %;"
+                cursor.execute(sql_increment_person, (id_person_max,))
+
+                Dao.connection.commit()
+                return True
+        except Exception as e:
+            print(f"Erreur lors de la supression du membre {e}")
+            Dao.connection.rollback()
+            return False

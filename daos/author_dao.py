@@ -94,9 +94,10 @@ class AuthorDao(Dao[Author]):
 
                 sql_max_person = "SELECT MAX(p_ID_person) AS max_id FROM pg_person;"
                 cursor.execute(sql_max_person)
+                id_person_max = cursor.lastrowid
 
                 sql_increment_person = "ALTER TABLE pg_person AUTO_INCREMENT = %s;"
-                cursor.execute(sql_increment_person, (id_person,))
+                cursor.execute(sql_increment_person, (id_person_max,))
 
                 Dao.connection.commit()
                 return True

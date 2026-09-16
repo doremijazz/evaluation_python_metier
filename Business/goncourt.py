@@ -11,6 +11,7 @@ from typing import Optional
 from daos import author_dao
 from daos.author_dao import AuthorDao
 from daos.book_dao import BookDao
+from daos.connection_dao import ConnectionDao
 from daos.member_dao import MemberDao
 from daos.dao import Dao
 from models.Person import Person
@@ -43,6 +44,14 @@ class Goncourt:
 
     def add_member(self,member:Member):
         self.members.append(member)
+
+    def add_meber_to_db (menber : Member) -> bool:
+        try :
+            MemberDao.create(menber)
+            return True
+        except Exception as e:
+            print(f"Erreur lors de lajout a la db du memnbre : {e}")
+            return False
 
     def get_author(author_nbr : int)->Optional[Author]:
         author_dao : AuthorDao = AuthorDao()
@@ -561,4 +570,5 @@ class Goncourt:
         self.add_book(bataille_au_proces)
         self.add_author(bataille_au_proces.author)
     def connection(self, email : str, pasword : str) -> str:
-        pass
+        status : ConnectionDao = ConnectionDao.sursh_status(email, pasword)
+        return status

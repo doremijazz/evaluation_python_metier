@@ -1,3 +1,6 @@
+from models.Member import Member
+
+
 class Console:
     @staticmethod
     def principal_menu():
@@ -57,4 +60,16 @@ class Console:
         email = input("Entrez votre email : \n")
         password = input("Entrez votre password : \n")
         return email,password
+
+    @staticmethod
+    def member_input()-> Member:
+        name = input("Entrez le prénom : ")
+        surname = input("Entrez le nom de famille : \n")
+        age = input("Entrez l'age : \n")
+        email = input("Entrez l'email : \n")
+        password = input("Entrez le mot de passe initial : ")
+        status = input("Quel est dont status (president ou membre ou admin) ? : \n")
+        member = Member(name,surname,age,email,password,status)
+        return member
+
 

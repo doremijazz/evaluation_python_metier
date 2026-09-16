@@ -1,6 +1,5 @@
 class console:
     @staticmethod
-
     def principal_menu():
         print("########################\n")
         print("----- MENU PRINCIPAL ------")
@@ -9,7 +8,7 @@ class console:
         print("2- Afficher tous les livres\n")
         print("0- Quitter\n")
 
-
+    @staticmethod
     def president_menu():
         print("##########################\n")
         print("----- MENU PRESIDENT ------")
@@ -20,6 +19,7 @@ class console:
         print("4- Saisir la selection de livre pour le prochian tour\n")
         print("0- Quitter\n")
 
+    @staticmethod
     def admin_menu():
         print("#########################\n")
         print("----- MENU ADMIN ------")
@@ -32,6 +32,7 @@ class console:
         print("6- Suprimer un livre\n")
         print("0- Quitter\n")
 
+    @staticmethod
     def member_menu():
         print("########################\n")
         print("----- MENU MEMBER ------")
@@ -40,12 +41,15 @@ class console:
         print("2- Voter pour une selection de livre\n")
         print("0- Quitter\n")
 
+    @staticmethod
     def message_display(message):
         print(message)
 
+    @staticmethod
     def choice_command():
         return input("Votre choix : \n")
 
+    @staticmethod
     def login_menu():
         print("#######################\n")
         print("----- MENU LOGIN ------")

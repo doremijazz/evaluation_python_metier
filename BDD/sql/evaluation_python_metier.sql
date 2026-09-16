@@ -51,6 +51,8 @@ CREATE TABLE pg_livre (
     l_ID_auteur INT NOT NULL,
     l_title VARCHAR(100) NOT NULL,
     l_resume TEXT,
+    l_editeur VARCHAR(50),
+    l_publish_date DATE FORMAT 'dd.mm.yyyy',
     l_pp VARCHAR(255),
     l_nb_pages INT,
     l_isbn VARCHAR(13) NOT NULL UNIQUE,
@@ -193,11 +195,14 @@ INSERT INTO pg_auteur (aut_ID_auteur, aut_bio, p_ID_person) VALUES
  en scène des artistes et interrogent les liens entre création, histoire et justice.',
  26);
 
- INSERT INTO pg_livre (
+ 
+INSERT INTO pg_livre (
     l_ID_livre,
     l_ID_auteur,
     l_title,
     l_resume,
+    l_editeur,
+    l_publish_date,
     l_pp,
     l_nb_pages,
     l_isbn,
@@ -206,10 +211,11 @@ INSERT INTO pg_auteur (aut_ID_auteur, aut_bio, p_ID_person) VALUES
 VALUES
 (
     1,
-    1,
+    11,
     'Minotaure',
-    'À 23 ans, un jeune homme part à la rencontre de son père, qu''il n''a jamais connu, dans son cabinet de psychiatre.
-     Ce récit autobiographique raconte sa quête familiale et rend hommage à sa mère.',
+    'À 23 ans, un jeune homme part à la rencontre de son père, qu''il n''a jamais connu, dans son cabinet de psychiatre. Ce récit autobiographique raconte sa quête familiale et rend hommage à sa mère.',
+    'Albin Michel',
+    '2026-08-19',
     'Le narrateur, son père, sa mère',
     256,
     '2226511873',
@@ -217,10 +223,11 @@ VALUES
 ),
 (
     2,
-    2,
+    12,
     'Faire la peau',
-    'À trente ans, une femme tente de se libérer de l''emprise de sa mère et d''une lignée familiale marquée par la violence. 
-    Elle revisite son enfance et son adolescence afin de comprendre ce lien mêlant colère, amour et dépendance.',
+    'À trente ans, une femme tente de se libérer de l''emprise de sa mère et d''une lignée familiale marquée par la violence. Elle revisite son enfance et son adolescence afin de comprendre ce lien mêlant colère, amour et dépendance.',
+    'P.O.L',
+    '2026-08-20',
     'La narratrice, sa mère',
     288,
     '2818063583',
@@ -228,10 +235,11 @@ VALUES
 ),
 (
     3,
-    3,
+    13,
     'Chronique d''un royaume perdu',
-    'Au Bouchon, un village isolé de l''île Maurice, quatre générations se succèdent depuis l''époque de l''esclavage. 
-    Un enfant devient le chroniqueur de ce royaume afin d''en conserver les luttes, les amours et la mémoire.',
+    'Au Bouchon, un village isolé de l''île Maurice, quatre générations se succèdent depuis l''époque de l''esclavage. Un enfant devient le chroniqueur de ce royaume afin d''en conserver les luttes, les amours et la mémoire.',
+    'Grasset',
+    '2026-08-19',
     'Le chroniqueur, les habitants du Bouchon',
     464,
     '2246846943',
@@ -239,10 +247,11 @@ VALUES
 ),
 (
     4,
-    4,
+    14,
     'Le fabuleux piano',
-    'Sonia Devillers recherche un piano à queue volé à une famille juive par les nazis en 1943. 
-    Son enquête sur les instruments pillés pendant l''Occupation fait résonner l''histoire collective avec celle de sa propre grand-mère.',
+    'Sonia Devillers recherche un piano à queue volé à une famille juive par les nazis en 1943. Son enquête sur les instruments pillés pendant l''Occupation fait résonner l''histoire collective avec celle de sa propre grand-mère.',
+    'Robert Laffont',
+    '2026-08-27',
     'La narratrice, sa grand-mère, les propriétaires du piano',
     288,
     '2221286804',
@@ -250,10 +259,11 @@ VALUES
 ),
 (
     5,
-    5,
+    15,
     'Nous aussi',
-    'Un récit consacré à des personnages confrontés à leur histoire intime et familiale. 
-    Le roman examine ce qui rapproche les êtres, mais également les silences et les blessures qui les séparent.',
+    'Un récit consacré à des personnages confrontés à leur histoire intime et familiale. Le roman examine ce qui rapproche les êtres, mais également les silences et les blessures qui les séparent.',
+    'Actes Sud',
+    '2026-08-19',
     'La narratrice, sa famille',
     192,
     '2330225571',
@@ -261,10 +271,11 @@ VALUES
 ),
 (
     6,
-    6,
+    16,
     'Joseph dans la nuit',
-    'À travers le personnage de Joseph, le récit évoque l''enfermement, la nuit carcérale et les pensées qui permettent de résister. 
-    Le protagoniste tente de préserver son identité malgré l''isolement et l''incertitude.',
+    'À travers le personnage de Joseph, le récit évoque l''enfermement, la nuit carcérale et les pensées qui permettent de résister. Le protagoniste tente de préserver son identité malgré l''isolement et l''incertitude.',
+    'L''Iconoclaste',
+    '2026-08-20',
     'Joseph, ses proches, ses gardiens',
     224,
     '237880492X',
@@ -272,10 +283,11 @@ VALUES
 ),
 (
     7,
-    7,
+    17,
     'La solitude des professeurs est infinie',
-    'Un professeur observe la transformation de son métier et la manière dont l''école est considérée par la société. 
-    Le roman aborde la transmission, la vocation d''enseigner et la solitude ressentie face aux difficultés du système scolaire.',
+    'Un professeur observe la transformation de son métier et la manière dont l''école est considérée par la société. Le roman aborde la transmission, la vocation d''enseigner et la solitude ressentie face aux difficultés du système scolaire.',
+    'Gallimard',
+    '2026-08-20',
     'Le professeur, ses élèves, ses collègues',
     320,
     '2073101542',
@@ -283,10 +295,11 @@ VALUES
 ),
 (
     8,
-    8,
+    18,
     'Je',
-    'Le roman redonne une voix à une femme jusque-là enfermée dans le regard et le récit des autres. 
-    Elle raconte son existence à la première personne et tente de reprendre possession de son identité.',
+    'Le roman redonne une voix à une femme jusque-là enfermée dans le regard et le récit des autres. Elle raconte son existence à la première personne et tente de reprendre possession de son identité.',
+    'Gallimard',
+    '2026-08-20',
     'La narratrice',
     256,
     '2073099947',
@@ -294,10 +307,11 @@ VALUES
 ),
 (
     9,
-    9,
+    19,
     'L''inconnue du quai de Javel',
-    'Philippe Jaenada enquête sur une jeune femme retrouvée morte près du quai de Javel.
-     À partir des archives disponibles, il cherche à reconstruire son identité, son parcours et les circonstances de sa disparition.',
+    'Philippe Jaenada enquête sur une jeune femme retrouvée morte près du quai de Javel. À partir des archives disponibles, il cherche à reconstruire son identité, son parcours et les circonstances de sa disparition.',
+    'Flammarion',
+    '2026-08-19',
     'La jeune inconnue, le narrateur, les enquêteurs',
     528,
     '2080490893',
@@ -305,10 +319,11 @@ VALUES
 ),
 (
     10,
-    10,
+    20,
     'Une forêt',
-    'Le narrateur traverse une forêt réelle et mentale dans laquelle les souvenirs, les œuvres et les événements historiques se répondent.
-     Le paysage devient progressivement un espace de mémoire et de réflexion.',
+    'Le narrateur traverse une forêt réelle et mentale dans laquelle les souvenirs, les œuvres et les événements historiques se répondent. Le paysage devient progressivement un espace de mémoire et de réflexion.',
+    'Albin Michel',
+    '2026-08-19',
     'Le narrateur',
     112,
     '2226499520',
@@ -316,10 +331,11 @@ VALUES
 ),
 (
     11,
-    11,
+    21,
     'N''efface pas mes cercles',
-    'En 1980, une femme se suicide dans un appartement. Le roman remonte le temps pour comprendre son histoire, son mariage dans les années 1950 et 
-    les destins brisés qui ont marqué plusieurs générations.',
+    'En 1980, une femme se suicide dans un appartement. Le roman remonte le temps pour comprendre son histoire, son mariage dans les années 1950 et les destins brisés qui ont marqué plusieurs générations.',
+    'Verdier',
+    '2026-08-20',
     'La femme, son mari, leur famille',
     160,
     '2378562950',
@@ -327,10 +343,11 @@ VALUES
 ),
 (
     12,
-    12,
+    22,
     'Choses que je croyais perdues',
-    'Alors qu''Émilie prépare son déménagement, les objets qu''elle retrouve font réapparaître des souvenirs qu''elle pensait disparus. 
-    Chaque chose devient le point de départ d''une évocation intime, drôle ou mélancolique.',
+    'Alors qu''Émilie prépare son déménagement, les objets qu''elle retrouve font réapparaître des souvenirs qu''elle pensait disparus. Chaque chose devient le point de départ d''une évocation intime, drôle ou mélancolique.',
+    'L''Arbalète/Gallimard',
+    '2026-08-20',
     'Émilie, ses proches',
     176,
     '2073112641',
@@ -338,10 +355,11 @@ VALUES
 ),
 (
     13,
-    13,
+    23,
     'C''était ça ou mourir',
-    'Après l''embrasement de son quartier de Port-au-Prince, Jonas Dorléon quitte Haïti avec un diplôme, un cahier de poèmes et une photographie de sa mère. 
-    Le roman raconte son exil et sa lutte pour reconstruire sa vie.',
+    'Après l''embrasement de son quartier de Port-au-Prince, Jonas Dorléon quitte Haïti avec un diplôme, un cahier de poèmes et une photographie de sa mère. Le roman raconte son exil et sa lutte pour reconstruire sa vie.',
+    'Grasset',
+    '2026-08-19',
     'Jonas Dorléon, sa mère',
     272,
     '2246847060',
@@ -349,10 +367,11 @@ VALUES
 ),
 (
     14,
-    14,
+    24,
     'De l''autre côté du lac',
-    'Près d''un lac de haute montagne, Paola, une photographe accompagnant des chercheurs, aperçoit quelque chose sur un versant. 
-    Après la découverte d''un corps, elle décide de rester seule dans la réserve avant de disparaître.',
+    'Près d''un lac de haute montagne, Paola, une photographe accompagnant des chercheurs, aperçoit quelque chose sur un versant. Après la découverte d''un corps, elle décide de rester seule dans la réserve avant de disparaître.',
+    'Les Éditions de Minuit',
+    '2026-08-27',
     'Paola, le narrateur, les chercheurs',
     288,
     '2707358231',
@@ -360,10 +379,11 @@ VALUES
 ),
 (
     15,
-    15,
+    25,
     'La Guerre éternelle',
-    'À partir de voyages, de souvenirs et de conflits anciens ou contemporains, le narrateur réfléchit à la permanence de la guerre dans
-     l''histoire humaine et aux traces qu''elle laisse dans les paysages et les mémoires.',
+    'À partir de voyages, de souvenirs et de conflits anciens ou contemporains, le narrateur réfléchit à la permanence de la guerre dans l''histoire humaine et aux traces qu''elle laisse dans les paysages et les mémoires.',
+    'Gallimard',
+    '2026-08-20',
     'Le narrateur, les soldats, les témoins',
     352,
     '2073100678',
@@ -371,10 +391,11 @@ VALUES
 ),
 (
     16,
-    16,
+    26,
     'Bataille au procès',
-    'En 1956, Georges Bataille doit répondre de son œuvre devant la justice. Le roman met en scène le procès, les débats autour de la
-  liberté littéraire et l''affrontement entre création artistique et morale publique.',
+    'En 1956, Georges Bataille doit répondre de son œuvre devant la justice. Le roman met en scène le procès, les débats autour de la liberté littéraire et l''affrontement entre création artistique et morale publique.',
+    'Maurice Nadeau',
+    '2026-08-21',
     'Georges Bataille, les magistrats, les témoins',
     192,
     '2862313599',

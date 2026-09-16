@@ -8,10 +8,10 @@ class ConnectionDao:
     def sursh_status(email : str, pasword :str) -> Optional[str]:
         try:
             with Dao.connection.cursor() as cursor:
-                sql = "select u_status from pg_users where email = %s AND pasword = %s"
+                sql = "select u_statut from pg_user where u_email = %s AND u_pasword = %s"
                 cursor.execute(sql, (email, pasword))
-                status = cursor.fetchone()
-                return status
+                record = cursor.fetchone()
+                return record['u_statut']
         except Exception as e:
             print(f"Erreur lors de la connection : {e}")
             return None

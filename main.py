@@ -40,14 +40,16 @@ def main() -> None:
 
     goncourt.test_book_dao()
 
+    goncourt.init_db()
     while True:
         Console.principal_menu()
-        choice = Console.choice_command()
+        choice = int(Console.choice_command())
         if choice == 1:
             email, pasword = Console.login_menu()
             status = goncourt.connection(email, pasword)
+            print(f"status {status}")
             ##################################################
-            if status == "president":
+            if status == "President":
                 while True:
                     Console.president_menu()
                     choicie = Console.choice_command()
@@ -62,14 +64,14 @@ def main() -> None:
                     elif choice == 0:
                         break
             #########################################################################
-            elif status == "member":
+            elif status == "Member":
                 while True:
                     Console.member_menu()
-                    choice = Console.choice_command()
+                    choice = int(Console.choice_command())
                     if choice == 1:
                         Book.display_all_books(goncourt.books)
                     elif choice == 2:
-                        if len(goncourt.book) > 8:
+                        if len(goncourt.books) > 8:
                             nb = 8;
                         elif len(goncourt.books) > 4:
                             nb = 4;
@@ -82,7 +84,7 @@ def main() -> None:
             elif status == "admin":
                 while True:
                     Console.admin_menu()
-                    choice = Console.choice_command()
+                    choice = int(Console.choice_command())
                     if choice == 1:
                         member = Console.member_input()
                         goncourt.add_meber_to_db(member)

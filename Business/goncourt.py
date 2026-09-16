@@ -8,7 +8,7 @@ from dataclasses import dataclass, field
 from datetime import date, datetime
 from typing import Optional
 
-from daos import author_dao
+from daos import author_dao, book_dao
 from daos.author_dao import AuthorDao
 from daos.book_dao import BookDao
 from daos.connection_dao import ConnectionDao
@@ -617,6 +617,25 @@ class Goncourt:
         )
         self.add_book(bataille_au_proces)
         self.add_author(bataille_au_proces.author)
+
+
+    def init_db(self):
+
+        Book_dao : BookDao = BookDao()
+        Author_dao : AuthorDao = AuthorDao()
+        Member_dao : MemberDao = MemberDao()
+
+        b = Book_dao.readAll()
+        for book in b:
+            self.add_book(book)
+        a = Author_dao.readAll()
+        for author in a:
+            self.add_author(author)
+        m = Member_dao.readAll()
+        for member in m:
+            self.add_member(member)
+
+
     def connection(self, email : str, pasword : str) -> str:
         status : ConnectionDao = ConnectionDao.sursh_status(email, pasword)
         return status

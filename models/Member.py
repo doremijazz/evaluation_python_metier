@@ -18,8 +18,8 @@ class Member(User):
         person_str = super().__str__()
         print(f"Member_ID : {self.member_nbr}, \nInformation : {person_str}")
 
-
-    def vote(self,books:list[Book], nbr: int)-> list[Book]:
+    @staticmethod
+    def vote(books:list[Book], nbr: int)-> list[Book]:
         selected_books = []
         while nbr > 0:
             for book in books:

@@ -120,3 +120,16 @@ class BookDao(Dao[Book]):
         except Exception as e:
             print(f"Erreur lors de la supression du livre : {e}")
             return False
+
+    def sursh(self, title: str) -> Optional[Book]:
+        try:
+            with Dao.connection.cursor() as cursor:
+                sql = "SELECT * FROM pg_livre WHERE l_title = %s"
+                cursor.execute(sql, (title,))
+                record = cursor.fetchone()
+                if record is not None:
+                    book = self.book_from_db(record)
+                else:
+                    book = None
+        except Exception as e:
+            print(f"Erreur lors de la recherche du livre : {e}")

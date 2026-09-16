@@ -128,3 +128,16 @@ class MemberDao(Dao[Member]):
             print(f"Erreur lors de la supression du membre : {e}")
             Dao.connection.rollback()
             return False
+
+    def sursh(self, name: str, surname : str) -> Optional[Member]:
+        try:
+            with Dao.connection.cursor() as cursor:
+                sql = "SELECT * FROM pg_membre WHERE m_first_name = %s AND m_last_name = %s"
+                cursor.execute(sql, (name, surname))
+                record = cursor.fetchone()
+                member = self.member_from_db(record)
+                return member
+        except Exception as e:
+            print(f"Erreur lors du membre : {e}")
+            Dao.connection.rollback()
+            return None

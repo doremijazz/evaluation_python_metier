@@ -42,7 +42,7 @@ def main() -> None:
 
     while True:
         Console.principal_menu()
-        choice : Console.choice_command()
+        choice = Console.choice_command()
         if choice == 1:
             email, pasword = Console.login_menu()
             status = goncourt.connection(email, pasword)
@@ -50,7 +50,7 @@ def main() -> None:
             if status == "president":
                 while True:
                     Console.president_menu()
-                    choicie : Console.choice_command()
+                    choicie = Console.choice_command()
                     if choice == 1:
                         Book.display_all_books(goncourt.books)
                     elif choice == 2:
@@ -65,7 +65,7 @@ def main() -> None:
             elif status == "member":
                 while True:
                     Console.member_menu()
-                    choice : Console.choice_command()
+                    choice = Console.choice_command()
                     if choice == 1:
                         Book.display_all_books(goncourt.books)
                     elif choice == 2:
@@ -82,13 +82,27 @@ def main() -> None:
             elif status == "admin":
                 while True:
                     Console.admin_menu()
-                    choice : Console.choice_command()
+                    choice = Console.choice_command()
                     if choice == 1:
                         member = Console.member_input()
                         goncourt.add_meber_to_db(member)
                     elif choice == 2:
                         member = Console.member_input()
-                        goncourt.update_menber(member)
+                        goncourt.update_menber_in_db(member)
+                    elif choice == 3:
+                        name, surname = Console.member_to_delete()
+                        member = goncourt.sursh_member(name, surname)
+                        goncourt.delete_member_to_db(member)
+                    elif choice == 4:
+                        book = Console.book_input()
+                        goncourt.add_book_to_db(book)
+                    elif choice == 5:
+                        book = Console.book_input()
+                        goncourt.update_book_to_db(book)
+                    elif choice == 6:
+                        title = Console.book_to_delete()
+                        book = goncourt.sursh_book(title)
+                        goncourt.delete_book_to_db(book)
 
 
 

@@ -47,6 +47,23 @@ class Goncourt:
             print(f"Erreur lors de la creation de book en bd : {e}")
             return False
 
+    def sursh_book_in_db(self, title :str)-> Optional[Book]:
+        try :
+            book : Book = BookDao.sursh(title)
+            return book
+        except Exception as e:
+            print(f"Erreur dans la recherche du livre en db : {e}")
+            return None
+
+
+    def update_book_to_db(self,book:Book)->bool:
+        try:
+            BookDao.update(book)
+            return True
+        except Exception as e:
+            print(f"Erreur lors de MAJ du livre en db : {e}")
+            return False
+
     def add_author(self,author:Author):
         self.authors.append(author)
 
@@ -61,12 +78,28 @@ class Goncourt:
             print(f"Erreur lors de lajout a la db du memnbre : {e}")
             return False
 
-    def delete_member_to_db (member : Member):
+    def update_member_in_db(member : Member)-> bool:
+        try:
+            MemberDao.update(member)
+            return True
+        except Exception as e:
+            print(f"Erreur lors de MAJ du membre en db : {e}")
+            return False
+
+    def delete_member_to_db (member : Member) -> bool:
         try:
             MemberDao.delete(member)
             return True
         except Exception as e:
             print(f"Erreur lors de la supression du membre en db : {e}")
+
+    def sursh_member(name, surname)-> Optional[Member]:
+        try :
+            member = MemberDao.sursh(name, surname)
+            return member
+        except Exception as e:
+            print(f"Erreur lors de la recherche du membre : {e}")
+
 
     def get_author(author_nbr : int)->Optional[Author]:
         author_dao : AuthorDao = AuthorDao()

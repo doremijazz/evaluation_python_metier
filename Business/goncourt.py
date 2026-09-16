@@ -119,9 +119,15 @@ class Goncourt:
 
         print("###############################################\n"
               "Lecture de membre dans la base de données -> \n")
+        membre = member_dao.read(id)
+        membre.display()
 
         print("###############################################\n"
               "Lecture de tous les membres de la base de données \n")
+
+        les_membre =member_dao.readAll()
+        for membre in les_membre:
+            membre.display()
 
         sucess = member_dao.delete(victor)
         print("###############################################\n"

@@ -44,14 +44,15 @@ class MemberDao(Dao[Member]):
             return 0
 
     def member_from_db(self, record)-> Member:
-        member : Member = Member(record['p_surname'], record['p_name'], record['p_age'], record['u_emal'], record['u_pasword'], record['u_statut'] )
+        member : Member = Member(record['p_surname'], record['p_name'], record['p_age'], record['u_email'], record['u_pasword'], record['u_statut'] )
+        member.member_nbr = record['m_ID_membre']
         return member
 
     def read(self, member_id: int) -> Member:
         member : Optional[Member]
         try:
             with Dao.connection.cursor() as cursor:
-                sql_person = "SELECT * FROM pg_member M INNER JOIN pg_user U ON U.u_ID_user = M.u_ID_user INNER JOIN pg_person P ON U.p_ID_person = P.p_ID_person WHERE M.m_ID_membre = %s"
+                sql_person = "SELECT * FROM pg_membre M INNER JOIN pg_user U ON U.u_ID_user = M.u_ID_user INNER JOIN pg_person P ON U.p_ID_person = P.p_ID_person WHERE M.m_ID_membre = %s"
                 cursor.execute(sql_person, (member_id,))
                 record = cursor.fetchone()
                 if record is not None:
@@ -60,13 +61,13 @@ class MemberDao(Dao[Member]):
                     member = None
                 return member
         except Exception as e:
-            print(f"Erreur lors de la création du membre : {e}")
+            print(f"Erreur lors de la lecture du membre : {e}")
 
     def readAll(self) -> list[Member]:
         member_list : list[Member] = []
         try:
             with Dao.connection.cursor() as cursor:
-                sql = "SElECT * FROM pg_member M INNER JOIN pg_user U ON U.u_ID_user = M.u_ID_user INNER JOIN pg_person P ON U.p_ID_person = P.p_ID_person"
+                sql = "SElECT * FROM pg_membre M INNER JOIN pg_user U ON U.u_ID_user = M.u_ID_user INNER JOIN pg_person P ON U.p_ID_person = P.p_ID_person"
                 cursor.execute(sql)
                 records = cursor.fetchall()
                 for record in records:

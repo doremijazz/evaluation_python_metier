@@ -77,7 +77,16 @@ class Goncourt:
 
         moi : Author = Author("anais", "binet", 26, "blablabla")
         self.add_author(moi)
-        author_dao.create(moi)
+        id = author_dao.create(moi)
+        #print(moi)
+        auteur =author_dao.read(id)
+        les_auteur =author_dao.readAll()
+        auteur.display()
+        for un_auteur in les_auteur:
+            un_auteur.display()
+
+        #print("a", a)
+        moi.author_id = auteur.author_id
 
         author_dao.delete(moi)
         Author.author_id -=1

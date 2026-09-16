@@ -19,8 +19,10 @@ class AuthorDao(Dao[Author]):
                 sql_author ="INSERT INTO pg_auteur (aut_bio, p_ID_person) VALUES (%s, %s)"
                 cursor.execute(sql_author,(author.biography, id_person))
                 id_author = cursor.lastrowid
-
+                Author.id_author = id_author
+                Author.author_nbr = id_author
                 Dao.connection.commit()
+                print(f"id_author = {id_author}")
                 return id_author
         except Exception as e :
             print(f"Erreur lors de la création de l'auteur : {e}")
@@ -36,11 +38,13 @@ class AuthorDao(Dao[Author]):
 
             try:
                 with Dao.connection.cursor() as cursor:
-                    sql = "SELECT * FROM pg_author A INNER JOIN pg_person P on A.p_ID_person = P.p_ID_person WHERE id_author = %s"
+                    sql = "SELECT * FROM pg_auteur A INNER JOIN pg_person P on A.p_ID_person = P.p_ID_person WHERE aut_ID_auteur = %s"
                     cursor.execute(sql, (id_author,))
                     record = cursor.fetchone()
                     if record is not None:
                         author = self.author_from_db(record)
+                        author.author_id = record["aut_ID_auteur"]
+                        print("id auteur bdd", record['aut_ID_auteur'])
                     else :
                         author = None
 
@@ -52,7 +56,7 @@ class AuthorDao(Dao[Author]):
         author_list:list[Author] = []
         try :
             with Dao.connection.cursor() as cursor:
-                sql = "SELECT * FROM pg_author A INNER JOIN pg_person P on A.p_ID_person = P.p_ID_person"
+                sql = "SELECT * FROM pg_auteur A INNER JOIN pg_person P on A.p_ID_person = P.p_ID_person"
                 cursor.execute(sql)
                 records = cursor.fetchall()
                 for record in records:
@@ -77,20 +81,22 @@ class AuthorDao(Dao[Author]):
     def delete(self, author : Author) -> bool:
         try :
             with Dao.connection.cursor() as cursor:
+                #print("debut delete auteur")
+                #print(author)
                 sql_slect_person = "SELECT P.p_ID_person FROM pg_person AS P INNER JOIN pg_auteur AS A on P.p_ID_person = A.p_ID_person WHERE A.aut_ID_auteur = %s"
-                cursor.execute(sql_slect_person,(author.author_nbr,))
+                cursor.execute(sql_slect_person,(author.author_id,))
                 record = cursor.fetchone()
                 id_person : int = record["p_ID_person"]
 
                 #print(f"id_person : {id_person}")
-                #print(f"author.author_nbr : {author.author_nbr}")
+                #print(f"author.author_nbr : {author.author_id}")
 
                 sql_author = "DELETE FROM pg_auteur  WHERE aut_ID_auteur = %s"
-                cursor.execute(sql_author,(author.author_nbr,))
+                cursor.execute(sql_author,(author.author_id,))
 
 
                 sql_increment_auteur = "ALTER TABLE pg_auteur AUTO_INCREMENT = %s;"
-                cursor.execute(sql_increment_auteur, (author.author_nbr,))
+                cursor.execute(sql_increment_auteur, (author.author_id,))
 
                 sql_person = "DELETE FROM pg_person  WHERE p_ID_person = %s"
                 cursor.execute(sql_person,(id_person,))

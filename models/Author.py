@@ -17,3 +17,6 @@ class Author(Person):
     def display(self):
         person_str = super().__str__()
         print(f"{person_str}. \n Biographie : {self.biography}")
+
+    def __str__(self):
+        return f"{self.author_id}. \n Biographie : {self.biography}"

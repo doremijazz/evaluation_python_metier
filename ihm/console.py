@@ -1,5 +1,15 @@
 class console:
     @staticmethod
+
+    def principal_menu():
+        print("########################\n")
+        print("----- MENU PRINCIPAL ------")
+        print("########################\n")
+        print("1- Se connecter\n")
+        print("2- Afficher tous les livres\n")
+        print("0- Quitter\n")
+        
+
     def president_menu():
         print("##########################\n")
         print("----- MENU PRESIDENT ------")

@@ -25,7 +25,10 @@ class BookDao(Dao[Book]):
             Dao.connection.rollback()
             return 0
 
-
+    def book_from_db(self, record)-> Book:
+        book : Book = Book(record["l_ID_auteur"], record["l_title"], record["l_editeur"], record["l_resume"], record["l_pp"], record["l_nb_pages"], record["l_isbn"], record["l_price"])
+        return book
+    
     def read(self, book_id: int) -> Book:
         pass
     def readAll(self) -> list[Book]:

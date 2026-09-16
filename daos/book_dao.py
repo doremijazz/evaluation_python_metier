@@ -58,10 +58,22 @@ class BookDao(Dao[Book]):
         except Exception as e:
             print(f"Erreur lors de la lecture de tous les livres : {e}")
 
-            
+
 
 
     def update(self, book: Book) -> bool:
-        pass
+        try:
+            with Dao.connection.cursor() as cursor:
+                sql = "UPDATE pg_livre SET l_ID_auteur=%, l_title=%,l_editeur=%s, l_resume=%s, l_pp=%s, l_nb_pages=%s, l_isbn=%s, l_price=%s WHERE l_ID_livre=%s"
+                cursor.execute(sql, (book.author.author_nbr, book.title, book.editeur, book.resume, book.pp, book.nb_pages, book.isbn,book.price, book.id))
+                Dao.connection.commit()
+                return True
+        except Exception as e:
+            print(f"Erreur lors de la modification du livre : {e}")
+            Dao.connection.rollback()
+            return False
+
+
+
     def delete(self, book: Book) -> bool:
         pass

@@ -86,7 +86,10 @@ def main() -> None:
                     if choice == 1:
                         member = Console.member_input()
                         goncourt.add_meber_to_db(member)
-                        
+                    elif choice == 2:
+                        member = Console.member_input()
+                        goncourt.update_menber(member)
+
 
 
 

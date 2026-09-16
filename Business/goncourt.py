@@ -39,6 +39,14 @@ class Goncourt:
     def add_book(self,book:Book):
         self.books.append(book)
 
+    def add_book_to_db(self,book:Book)->bool:
+        try:
+            BookDao.create(book)
+            return True
+        except Exception as e:
+            print(f"Erreur lors de la creation de book en bd : {e}")
+            return False
+
     def add_author(self,author:Author):
         self.authors.append(author)
 

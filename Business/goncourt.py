@@ -61,6 +61,13 @@ class Goncourt:
             print(f"Erreur lors de lajout a la db du memnbre : {e}")
             return False
 
+    def delete_member_to_db (member : Member):
+        try:
+            MemberDao.delete(member)
+            return True
+        except Exception as e:
+            print(f"Erreur lors de la supression du membre en db : {e}")
+
     def get_author(author_nbr : int)->Optional[Author]:
         author_dao : AuthorDao = AuthorDao()
         return author_dao.read(author_nbr)

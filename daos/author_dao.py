@@ -82,23 +82,28 @@ class AuthorDao(Dao[Author]):
                 record = cursor.fetchone()
                 id_person : int = record["p_ID_person"]
 
+                #print(f"id_person : {id_person}")
+                #print(f"author.author_nbr : {author.author_nbr}")
+
                 sql_author = "DELETE FROM pg_auteur  WHERE aut_ID_auteur = %s"
                 cursor.execute(sql_author,(author.author_nbr,))
 
-                id_auteur = cursor.lastrowid
+
                 sql_increment_auteur = "ALTER TABLE pg_auteur AUTO_INCREMENT = %s;"
-                cursor.execute(sql_increment_auteur, (id_auteur,))
+                cursor.execute(sql_increment_auteur, (author.author_nbr,))
 
                 sql_person = "DELETE FROM pg_person  WHERE p_ID_person = %s"
                 cursor.execute(sql_person,(id_person,))
-
+                id_person_max = cursor.lastrowid
                 sql_max_person = "SELECT MAX(p_ID_person) AS max_id FROM pg_person;"
                 cursor.execute(sql_max_person)
-                id_person_max = cursor.lastrowid
+
+
+                #print(f"id_person_max : {id_person_max}")
 
                 sql_increment_person = "ALTER TABLE pg_person AUTO_INCREMENT = %s;"
                 cursor.execute(sql_increment_person, (id_person_max,))
-
+                #print("end delte author")
                 Dao.connection.commit()
                 return True
         except Exception as e :

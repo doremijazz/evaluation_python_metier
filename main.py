@@ -14,5 +14,7 @@ def main() -> None:
 
     goncourt.test_author_dao()
 
+    goncourt.test_member_dao()
+
 if __name__ == "__main__":
     main()

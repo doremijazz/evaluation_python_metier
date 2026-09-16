@@ -6,7 +6,7 @@ from models.Book import Book
 
 
 @dataclass
-class MemberDao(Dao[Book]):
+class BookDao(Dao[Book]):
     def create(self, book: Book) -> int:
         pass
     def read(self, book_id: int) -> Book:

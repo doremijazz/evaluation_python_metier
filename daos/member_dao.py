@@ -3,6 +3,7 @@ from typing import Optional
 
 from daos.dao import Dao
 from models.Member import Member
+from models.Person import Person
 
 
 @dataclass
@@ -11,21 +12,32 @@ class MemberDao(Dao[Member]):
         id_member : Optional[int]
         id_user : int
         id_person : int
+        print("avant try")
         try:
             with Dao.connection.cursor() as cursor:
                 sql_person = "INSERT INTO pg_person (p_surname, p_name, p_age) VALUES (%s, %s, %s)"
                 cursor.execute(sql_person, (member.last_name, member.first_name, member.age))
                 id_person = cursor.lastrowid
+                Person.id_person = id_person
+
+                print(f"id_person : {id_person}")
 
                 sql_user = "INSERT INTO pg_user (p_ID_person, u_email, u_pasword, u_statut) VALUES (%s, %s, %s, %s)"
                 cursor.execute(sql_user, (id_person, member.email, member.password, member.statut))
                 id_user = cursor.lastrowid
 
-                sql_member = "INSERT INTO pg_member(u_ID_user, m_ID_membre) VALUES (%s, %s)"
-                cursor.execute(sql_member, (id_user, member.member_nbr))
+                print(f"id_user : {id_user}")
+
+                sql_member = "INSERT INTO pg_membre (u_ID_user) VALUES (%s)"
+                cursor.execute(sql_member, (id_user, ))
+
                 id_membre = cursor.lastrowid
+                member.member_nbr : int = id_membre
+
+                print(f"id_membre : {id_membre}")
+
                 Dao.connection.commit()
-                return id_member
+                return id_membre
         except Exception as e:
             print(f"Erreur lors de la création du membre : {e}")
             Dao.connection.rollback()
@@ -86,34 +98,32 @@ class MemberDao(Dao[Member]):
                 cursor.execute(sql_selec_person, (member.member_nbr,))
                 record = cursor.fetchone()
                 id_person : int = record["p_ID_person"]
-
+                print("id_person : ", id_person)
                 sql_member = "DELETE FROM pg_membre WHERE m_ID_membre = %s"
                 cursor.execute(sql_member, (member.member_nbr,))
                 id_membre = cursor.lastrowid
-
-                sql_increment_member = "ALTER TABLE pg_membre AUTO_INCREMENT = %;"
+                print("delete membre : ", id_membre)
+                sql_increment_member = "ALTER TABLE pg_membre AUTO_INCREMENT = %s"
                 cursor.execute(sql_increment_member, (id_membre,))
 
                 sql_user = "DELETE FROM pg_user WHERE p_ID_person = %s"
                 cursor.execute(sql_user, (id_person,))
                 id_user = cursor.lastrowid
-
-                sql_increment_user = "ALTER TABLE pg_user AUTO_INCREMENT = %;"
+                print("delete user : ", id_user)
+                sql_increment_user = "ALTER TABLE pg_user AUTO_INCREMENT = %s"
                 cursor.execute(sql_increment_user, (id_user,))
 
                 sql_person = "DELETE FROM pg_person WHERE p_ID_person = %s"
                 cursor.execute(sql_person, (id_person,))
+                print("delete person : ", id_person)
 
-                sql_max_person = "SELECT MAX(p_ID_person) AS max_id FROM pg_person;"
-                cursor.execute(sql_max_person)
-                id_person_max = cursor.lastrowid
 
-                sql_increment_person = "ALTER TABLE pg_person AUTO_INCREMENT = %;"
-                cursor.execute(sql_increment_person, (id_person_max,))
+                sql_increment_person = "ALTER TABLE pg_person AUTO_INCREMENT = %s"
+                cursor.execute(sql_increment_person, (id_person,))
 
                 Dao.connection.commit()
                 return True
         except Exception as e:
-            print(f"Erreur lors de la supression du membre {e}")
+            print(f"Erreur lors de la supression du membre : {e}")
             Dao.connection.rollback()
             return False

@@ -6,7 +6,7 @@ from models.User import User
 
 
 @dataclass
-class MemberDao(Dao[User]):
+class UserDao(Dao[User]):
     def create(self, user: User) -> int:
         pass
     def read(self, user_id: int) -> User:

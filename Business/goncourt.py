@@ -10,6 +10,7 @@ from typing import Optional
 
 from daos import author_dao
 from daos.author_dao import AuthorDao
+from daos.member_dao import MemberDao
 from daos.dao import Dao
 from models.Person import Person
 from models.President import President
@@ -80,6 +81,19 @@ class Goncourt:
 
         author_dao.delete(moi)
         Author.author_id -=1
+
+    def test_member_dao(self) -> None:
+        member_dao : MemberDao = MemberDao()
+
+        victor : Member = Member("victor", "sueur", 25, "victorsueur30@gmail.com", "1234", "Member")
+
+        self.add_member(victor)
+        member_dao.create(victor)
+
+        member_dao.delete(victor)
+        Member.member_id -= 1
+
+
 
 
     def init_static(self):

@@ -43,10 +43,24 @@ class BookDao(Dao[Book]):
                     book = None
         except Exception as e:
             print(f"Erreur lors de la lecture du livre : {e}")
-            
+
 
     def readAll(self) -> list[Book]:
-        pass
+        book_list : list[Book] = []
+        try:
+            with Dao.connection.cursor() as cursor:
+                sql = "SELECT * FROM books"
+                cursor.execute(sql)
+                records = cursor.fetchall()
+                for record in records:
+                    book_list.append(self.book_from_db(record))
+                return book_list
+        except Exception as e:
+            print(f"Erreur lors de la lecture de tous les livres : {e}")
+
+            
+
+
     def update(self, book: Book) -> bool:
         pass
     def delete(self, book: Book) -> bool:

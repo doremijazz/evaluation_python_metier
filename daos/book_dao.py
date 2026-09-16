@@ -76,4 +76,12 @@ class BookDao(Dao[Book]):
 
 
     def delete(self, book: Book) -> bool:
-        pass
+        try:
+            with Dao.connection.cursor() as cursor:
+                sql = "DELETE FROM pg_livre WHERE l_ID_livre = %s"
+                cursor.execute(sql, (book.id,))
+                Dao.connection.commit()
+                return True
+        except Exception as e:
+            print(f"Erreur lors de la supression du livre : {e}")
+            return False

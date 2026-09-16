@@ -8,7 +8,7 @@ class console:
         print("1- Se connecter\n")
         print("2- Afficher tous les livres\n")
         print("0- Quitter\n")
-        
+
 
     def president_menu():
         print("##########################\n")
@@ -40,4 +40,17 @@ class console:
         print("2- Voter pour une selection de livre\n")
         print("0- Quitter\n")
 
+    def message_display(message):
+        print(message)
+
+    def choice_command():
+        return input("Votre choix : \n")
+
+    def login_menu():
+        print("#######################\n")
+        print("----- MENU LOGIN ------")
+        print("########################\n")
+        email = input("Entrez votre email : \n")
+        password = input("Entrez votre password : \n")
+        return email,password
 

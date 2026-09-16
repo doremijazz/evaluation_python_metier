@@ -19,4 +19,5 @@ class Author(Person):
         print(f"{person_str}. \n Biographie : {self.biography}")
 
     def __str__(self):
-        return f"{self.author_id}. \n Biographie : {self.biography}"
+        person_str = super().__str__()
+        return f"{person_str}. \n Biographie : {self.biography}"

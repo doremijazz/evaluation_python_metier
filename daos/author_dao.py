@@ -44,7 +44,7 @@ class AuthorDao(Dao[Author]):
                     if record is not None:
                         author = self.author_from_db(record)
                         author.author_id = record["aut_ID_auteur"]
-                        print("id auteur bdd", record['aut_ID_auteur'])
+                        #print("id auteur bdd", record['aut_ID_auteur'])
                     else :
                         author = None
 

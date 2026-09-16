@@ -33,5 +33,7 @@ def main() -> None:
 
     goncourt.test_member_dao()
 
+    goncourt.test_book_dao()
+
 if __name__ == "__main__":
     main()

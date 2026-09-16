@@ -10,6 +10,7 @@ from typing import Optional
 
 from daos import author_dao
 from daos.author_dao import AuthorDao
+from daos.book_dao import BookDao
 from daos.member_dao import MemberDao
 from daos.dao import Dao
 from models.Person import Person
@@ -134,6 +135,35 @@ class Goncourt:
               f"Supression du membre de la base de données reussi ? -> {sucess}")
         Member.member_id -= 1
 
+    def test_book_dao(self)->None:
+        book_dao : BookDao = BookDao()
+        livre : Book = Book(
+            "Livre de test",
+            Author(
+                "Christine",
+                "Pertus",
+                53,
+                "Christine Pertus Binet est une formatrice française née en 1973. "
+            ),
+            "A la MFR de lesparre medoc elle est directrice adjointe et référente handicap",
+            date(2026, 9, 16),
+            "Larousse",
+            ["l'autrice", "les élèves de la MFR"],
+            96,
+            "1111111111",
+            6.5
+        )
+        self.add_book(livre)
+        id = book_dao.create(livre)
+        print(f"* Ajout d'un book dont l'id est {id} \n")
+        book = book_dao.read(id)
+        print(book)
+        books = book_dao.readAll()
+        for book in books:
+            print(book)
+
+        sucess = book_dao.delete(livre)
+        print(f"* Supression d'un livre reussi ? : {sucess} \n")
 
 
 

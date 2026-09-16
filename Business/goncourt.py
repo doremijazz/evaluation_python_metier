@@ -73,33 +73,59 @@ class Goncourt:
 
 
     def test_author_dao(self) -> None:
+
+        print("_______________________________________ \n"
+        "TEST AUTEUR DAO\n"
+        "_______________________________________ \n\n")
         author_dao : AuthorDao = AuthorDao()
 
         moi : Author = Author("anais", "binet", 26, "blablabla")
         self.add_author(moi)
         id = author_dao.create(moi)
+        print (f"* Ajout d'un auteur dont l'id est {id} \n")
         #print(moi)
+
+        print("###############################################\n"
+              "Lecture de auteur dans la base de données -> \n")
         auteur =author_dao.read(id)
-        les_auteur =author_dao.readAll()
         auteur.display()
+
+        print("###############################################\n"
+              "Lecture de tous les auteurs de la base de données \n")
+        les_auteur = author_dao.readAll()
         for un_auteur in les_auteur:
             un_auteur.display()
 
         #print("a", a)
         moi.author_id = auteur.author_id
 
-        author_dao.delete(moi)
+
+        sucess = author_dao.delete(moi)
+        print("###############################################"
+              f"Supression du auteur de la base de données reussi ? -> {sucess}")
         Author.author_id -=1
 
     def test_member_dao(self) -> None:
+        print("_______________________________________ \n"
+                "TEST MEMBRE DAO\n"
+                "_______________________________________ \n\n")
         member_dao : MemberDao = MemberDao()
 
         victor : Member = Member("victor", "sueur", 25, "victorsueur30@gmail.com", "1234", "Member")
 
         self.add_member(victor)
-        member_dao.create(victor)
+        id = member_dao.create(victor)
+        print(f"* Ajout d'un membre dont l'id est {id} \n")
 
-        member_dao.delete(victor)
+        print("###############################################\n"
+              "Lecture de membre dans la base de données -> \n")
+
+        print("###############################################\n"
+              "Lecture de tous les membres de la base de données \n")
+
+        sucess = member_dao.delete(victor)
+        print("###############################################\n"
+              f"Supression du membre de la base de données reussi ? -> {sucess}")
         Member.member_id -= 1
 
 

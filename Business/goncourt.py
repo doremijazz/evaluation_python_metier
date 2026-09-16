@@ -136,6 +136,9 @@ class Goncourt:
         Member.member_id -= 1
 
     def test_book_dao(self)->None:
+        print("_______________________________________ \n"
+              "TEST BOOK DAO\n"
+              "_______________________________________ \n\n")
         book_dao : BookDao = BookDao()
         livre : Book = Book(
             "Livre de test",
@@ -156,14 +159,21 @@ class Goncourt:
         self.add_book(livre)
         id = book_dao.create(livre)
         print(f"* Ajout d'un book dont l'id est {id} \n")
+
+        print("###############################################\n"
+              "Lecture d'un livre dans la base de données -> \n")
         book = book_dao.read(id)
         print(book)
+
+        print("###############################################\n"
+              "Lecture de tous les membres de la base de données \n")
         books = book_dao.readAll()
         for book in books:
             print(book)
 
         sucess = book_dao.delete(livre)
-        print(f"* Supression d'un livre reussi ? : {sucess} \n")
+        print("###############################################\n"
+              f"Supression du livre dans la base de données reussi ? -> {sucess}")
 
 
 

@@ -1,6 +1,7 @@
 from Business.goncourt import Goncourt
 from models.Book import Book
 from models.Member import Member
+from ihm.console import Console
 
 
 def main() -> None:
@@ -34,6 +35,16 @@ def main() -> None:
     goncourt.test_member_dao()
 
     goncourt.test_book_dao()
+
+    while True:
+        Console.principal_menu()
+        choice : Console.choice_command()
+        if choice == 1:
+            pass
+        elif choice == 2:
+            Book.display_all_books(goncourt.books)
+        elif choice == 0:
+            break
 
 if __name__ == "__main__":
     main()

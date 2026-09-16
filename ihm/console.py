@@ -1,4 +1,4 @@
-class console:
+class Console:
     @staticmethod
     def principal_menu():
         print("########################\n")

@@ -560,4 +560,5 @@ class Goncourt:
         )
         self.add_book(bataille_au_proces)
         self.add_author(bataille_au_proces.author)
-
+    def connection(self, email : str, pasword : str) -> str:
+        pass

@@ -28,9 +28,23 @@ class BookDao(Dao[Book]):
     def book_from_db(self, record)-> Book:
         book : Book = Book(record["l_ID_auteur"], record["l_title"], record["l_editeur"], record["l_resume"], record["l_pp"], record["l_nb_pages"], record["l_isbn"], record["l_price"])
         return book
-    
+
     def read(self, book_id: int) -> Book:
-        pass
+        book : Optional[Book]
+        try:
+            with Dao.connection.cursor() as cursor:
+                sql = "SELECT * FROM books WHERE l_ID_livre = %s"
+                cursor.execute(sql, (book_id,))
+                record = cursor.fetchone()
+                if record is not None:
+                    book = self.book_from_db(record)
+                    book.id = record["l_ID_livre"]
+                else:
+                    book = None
+        except Exception as e:
+            print(f"Erreur lors de la lecture du livre : {e}")
+            
+
     def readAll(self) -> list[Book]:
         pass
     def update(self, book: Book) -> bool:

@@ -52,11 +52,12 @@ def main() -> None:
             if status == "President":
                 while True:
                     Console.president_menu()
-                    choicie = Console.choice_command()
+                    choice = int(Console.choice_command())
                     if choice == 1:
                         Book.display_all_books(goncourt.books)
                     elif choice == 2:
-                        Member.display_all(goncourt.members)
+                        for member in goncourt.members:
+                            member.display()
                     elif choice == 3:
                         goncourt.books = President.enter_vote(goncourt.books)
                     elif choice == 4:
@@ -77,7 +78,9 @@ def main() -> None:
                             nb = 4;
                         else:
                             nb = 0;
-                        Member.vote(goncourt.books, nb)
+                        books = Member.vote(goncourt.books, nb)
+                        print(f"Les {nb} livre pour leqeuls vous avez voté")
+                        Book.display_all_books(books)
                     elif choice == 0:
                         break
             ################################################

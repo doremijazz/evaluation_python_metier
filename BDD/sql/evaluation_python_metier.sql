@@ -401,3 +401,6 @@ VALUES
     '2862313599',
     19.00
 );
+
+INSERT INTO pg_person (p_ID_person, p_surname, p_name, p_age) VALUES (28, "BINET", "Anaïs", 26);
+INSERT INTO pg_user (u_ID_user, u_email, u_pasword, u_statut, p_ID_person) VALUES (11, "anaisbinet22@gmail.com", "tsuki", "Admin", 28);

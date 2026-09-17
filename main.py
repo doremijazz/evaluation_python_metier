@@ -1,4 +1,6 @@
 import email
+import msvcrt
+import os
 
 from Business.goncourt import Goncourt
 from daos.member_dao import MemberDao
@@ -19,17 +21,18 @@ def main() -> None:
     print("########################\n"
           "Affichage en static de tous les livres\n")
     Book.display_all_books(goncourt.books)
+    os.system('pause')
 
     print("########################\n"
           "Affichage en static de tous les auteurs\n")
     for author in goncourt.authors:
         author.display()
-
+    os.system('pause')
     print("########################\n"
           "Affichage en static de tous les membre\n")
     for member in goncourt.members:
         member.display()
-
+    os.system('pause')
     print("-------------------------\n"
           "TEST EN BDD\n"
           "-------------------------\n\n")
@@ -40,11 +43,16 @@ def main() -> None:
     goncourt.init_db()
 
     goncourt.test_author_dao()
-
+    os.system('pause')
     goncourt.test_member_dao()
-
+    os.system('pause')
     goncourt.test_book_dao()
+    os.system('pause')
 
+    print("******************************************************")
+    print("*************** application console *******************")
+    print("******************************************************")
+    os.system('pause')
 
     while True:
         Console.principal_menu()
@@ -88,6 +96,7 @@ def main() -> None:
                             print(book)
                     elif choice == 0:
                         break
+                    os.system('pause')
             #########################################################################
             elif status == "Member":
                 while True:
@@ -107,8 +116,9 @@ def main() -> None:
                         Book.display_all_books(books)
                     elif choice == 0:
                         break
+                    os.system('pause')
             ################################################
-            elif status == "admin":
+            elif status == "Admin":
                 while True:
                     Console.admin_menu()
                     choice = int(Console.choice_command())
@@ -117,7 +127,7 @@ def main() -> None:
                         goncourt.add_meber_to_db(member)
                     elif choice == 2:
                         member = Console.member_input()
-                        goncourt.update_menber_in_db(member)
+                        goncourt.update_member_in_db(member)
                     elif choice == 3:
                         name, surname = Console.member_to_delete()
                         member = goncourt.sursh_member(name, surname)
@@ -132,7 +142,9 @@ def main() -> None:
                         title = Console.book_to_delete()
                         book = goncourt.sursh_book(title)
                         goncourt.delete_book_to_db(book)
-
+                    elif choice == 0:
+                        break
+                    os.system('pause')
 
 
 

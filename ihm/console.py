@@ -80,7 +80,7 @@ class Console:
 
     @staticmethod
     def member_to_delete():
-        name = input("Entrez le nom du membre : ")
+        name = input("Entrez le prénom du membre : ")
         surname = input("Entrez le nom de famille : ")
         return name,surname
 

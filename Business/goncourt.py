@@ -3,7 +3,7 @@
 """
 Classe goncourt
 """
-
+import os
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from typing import Optional
@@ -41,7 +41,8 @@ class Goncourt:
 
     def add_book_to_db(self,book:Book)->bool:
         try:
-            BookDao.create(book)
+            book_dao : BookDao = BookDao()
+            book_dao.create(book)
             return True
         except Exception as e:
             print(f"Erreur lors de la creation de book en bd : {e}")
@@ -49,7 +50,8 @@ class Goncourt:
 
     def sursh_book_in_db(self, title :str)-> Optional[Book]:
         try :
-            book : Book = BookDao.sursh(title)
+            book_dao : BookDao = BookDao()
+            book : Book = book_dao.sursh(title)
             return book
         except Exception as e:
             print(f"Erreur dans la recherche du livre en db : {e}")
@@ -58,7 +60,8 @@ class Goncourt:
 
     def update_book_to_db(self,book:Book)->bool:
         try:
-            BookDao.update(book)
+            book_dao : BookDao = BookDao()
+            book_dao.update(book)
             return True
         except Exception as e:
             print(f"Erreur lors de MAJ du livre en db : {e}")
@@ -70,32 +73,40 @@ class Goncourt:
     def add_member(self,member:Member):
         self.members.append(member)
 
+    @staticmethod
     def add_meber_to_db (menber : Member) -> bool:
         try :
-            MemberDao.create(menber)
+            menber_dao : MemberDao = MemberDao()
+            menber_dao.create(menber)
             return True
         except Exception as e:
             print(f"Erreur lors de lajout a la db du memnbre : {e}")
             return False
 
+    @staticmethod
     def update_member_in_db(member : Member)-> bool:
         try:
-            MemberDao.update(member)
+            member_dao : MemberDao = MemberDao()
+            member_dao.update(member)
             return True
         except Exception as e:
             print(f"Erreur lors de MAJ du membre en db : {e}")
             return False
 
+    @staticmethod
     def delete_member_to_db (member : Member) -> bool:
         try:
-            MemberDao.delete(member)
+            member_dao : MemberDao = MemberDao()
+            member_dao.delete(member)
             return True
         except Exception as e:
             print(f"Erreur lors de la supression du membre en db : {e}")
 
+    @staticmethod
     def sursh_member(name, surname)-> Optional[Member]:
         try :
-            member = MemberDao.sursh(name, surname)
+            member_dao : MemberDao = MemberDao()
+            member = member_dao.sursh(name, surname)
             return member
         except Exception as e:
             print(f"Erreur lors de la recherche du membre : {e}")
@@ -142,12 +153,13 @@ class Goncourt:
         id = author_dao.create(moi)
         print (f"* Ajout d'un auteur dont l'id est {id} \n")
         #print(moi)
+        os.system('pause')
 
         print("###############################################\n"
               "Lecture de auteur dans la base de données -> \n")
         auteur =author_dao.read(id)
         auteur.display()
-
+        os.system('pause')
         print("###############################################\n"
               "Lecture de tous les auteurs de la base de données \n")
         les_auteur = author_dao.readAll()
@@ -157,7 +169,7 @@ class Goncourt:
         #print("a", a)
         moi.author_id = auteur.author_id
 
-
+        os.system('pause')
         sucess = author_dao.delete(moi)
         print("###############################################"
               f"Supression du auteur de la base de données reussi ? -> {sucess}")
@@ -174,12 +186,12 @@ class Goncourt:
         self.add_member(victor)
         id = member_dao.create(victor)
         print(f"* Ajout d'un membre dont l'id est {id} \n")
-
+        os.system('pause')
         print("###############################################\n"
               "Lecture de membre dans la base de données -> \n")
         membre = member_dao.read(id)
         membre.display()
-
+        os.system('pause')
         print("###############################################\n"
               "Lecture de tous les membres de la base de données \n")
 
@@ -188,6 +200,7 @@ class Goncourt:
             membre.display()
 
         sucess = member_dao.delete(victor)
+        os.system('pause')
         print("###############################################\n"
               f"Supression du membre de la base de données reussi ? -> {sucess}")
         Member.member_id -= 1
@@ -216,18 +229,18 @@ class Goncourt:
         self.add_book(livre)
         id = book_dao.create(livre)
         print(f"* Ajout d'un book dont l'id est {id} \n")
-
+        os.system('pause')
         print("###############################################\n"
               "Lecture d'un livre dans la base de données -> \n")
         book = book_dao.read(id)
         print(book)
-
+        os.system('pause')
         print("###############################################\n"
               "Lecture de tous les membres de la base de données \n")
         books = book_dao.readAll()
         for book in books:
             print(book)
-
+        os.system('pause')
         sucess = book_dao.delete(livre)
         print("###############################################\n"
               f"Supression du livre dans la base de données reussi ? -> {sucess}")

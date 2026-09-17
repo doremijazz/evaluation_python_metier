@@ -80,7 +80,7 @@ class MemberDao(Dao[Member]):
         try:
             with Dao.connection.cursor() as cursor:
                 sql_person = ("UPDATE pg_person P JOIN pg_user U ON U.p_ID_person = P.p_ID_person JOIN "
-                              "pg_member ON U.u_ID_user = M.u_ID_user SET P.p_surname = %s, "
+                              "pg_membre ON U.u_ID_user = M.u_ID_user SET P.p_surname = %s, "
                               "P.p_name = %s, P.p_age = %s, U.u_email = %s, U.u_pasword = %s, U.u_statut = %s "
                               " WHERE M.m_ID_membre = %s")
                 cursor.execute(sql_person, (member.last_name, member.first_name, member.age, member.email, member.password, member.statut, member.member_nbr))
@@ -132,7 +132,7 @@ class MemberDao(Dao[Member]):
     def sursh(self, name: str, surname : str) -> Optional[Member]:
         try:
             with Dao.connection.cursor() as cursor:
-                sql = "SELECT * FROM pg_membre WHERE m_first_name = %s AND m_last_name = %s"
+                sql = "SELECT * FROM pg_membre INNER JOIN pg_user INNER JOIN pg_person WHERE p_first_name = %s AND p_last_name = %s"
                 cursor.execute(sql, (name, surname))
                 record = cursor.fetchone()
                 member = self.member_from_db(record)

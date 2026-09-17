@@ -13,20 +13,6 @@ class President(User):
         print(f" Name: {self.first_name}")
         print(f" Email: {self.email}")
 
-
-
-    def enter_vote(self, books : list[Book]) -> list[Book]:
-        book_votes = dict
-        book_selec = list[Book]
-        for book in books:
-            print(book)
-            vote = input("Saisie le nombre de vote")
-            book_votes[book] = book_votes.get(book, vote) + 1
-        book_votes = dict(sorted(book_votes.items(), key=lambda item: item[1], reverse=True))
-        for book in book_votes:
-            book_selec.add(book_votes[book])
-        return book_selec
-
     def announce_vote(self, books : list[Book], nb : int) -> list[Book]:
         book_announce = list[Book]
         while len(book_announce) < nb:
@@ -35,3 +21,31 @@ class President(User):
                 if choice == "o":
                     book_announce.add(book)
         return book_announce
+
+    @staticmethod
+    def enter_vote(books: list[Book]) -> list[Book]:
+        print(f"Nombre de livres : {len(books)}")
+        book_votes = {}
+
+        # Collect votes with validation
+        for book in books:
+            print(book)
+            while True:
+                try:
+                    vote = int(input("Saisir le nombre de votes : "))
+                    if vote < 0:
+                        print("Le nombre de votes ne peut pas être négatif.")
+                        continue
+                    break
+                except ValueError:
+                    print("Veuillez entrer un nombre entier valide.")
+            book_votes[book.id] = vote
+
+        # Sort by votes (descending)
+        sorted_books = sorted(
+            books,
+            key=lambda b: book_votes[b.id],
+            reverse=True
+        )
+
+        return sorted_books

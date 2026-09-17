@@ -59,9 +59,22 @@ def main() -> None:
                         for member in goncourt.members:
                             member.display()
                     elif choice == 3:
+                        if len(goncourt.books) > 8:
+                            nb = 8;
+                        elif len(goncourt.books) > 4:
+                            nb = 4;
+                        else:
+                            nb = 1;
                         goncourt.books = President.enter_vote(goncourt.books)
+                        print("Voici les livre selectionné, trié du plus choisi au moins choisi : ")
+                        for i in range(nb):
+                            print(goncourt.books[i])
                     elif choice == 4:
                         goncourt.books = President.announce_vote(goncourt.books)
+                        print("\n\n-----------------------------------------------")
+                        print("Voici les livre que vous avez selectionés : ")
+                        for book in goncourt.books:
+                            print(book)
                     elif choice == 0:
                         break
             #########################################################################
@@ -77,7 +90,7 @@ def main() -> None:
                         elif len(goncourt.books) > 4:
                             nb = 4;
                         else:
-                            nb = 0;
+                            nb = 1;
                         books = Member.vote(goncourt.books, nb)
                         print(f"Les {nb} livre pour leqeuls vous avez voté")
                         Book.display_all_books(books)

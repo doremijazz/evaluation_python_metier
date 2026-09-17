@@ -33,6 +33,11 @@ def main() -> None:
     print("-------------------------\n"
           "TEST EN BDD\n"
           "-------------------------\n\n")
+    goncourt.books = []
+    goncourt.members = []
+    goncourt.authors = []
+
+    goncourt.init_db()
 
     goncourt.test_author_dao()
 
@@ -40,7 +45,7 @@ def main() -> None:
 
     goncourt.test_book_dao()
 
-    goncourt.init_db()
+
     while True:
         Console.principal_menu()
         choice = int(Console.choice_command())

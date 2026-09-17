@@ -75,7 +75,13 @@ def main() -> None:
                         for i in range(nb):
                             print(goncourt.books[i])
                     elif choice == 4:
-                        goncourt.books = President.announce_vote(goncourt.books)
+                        if len(goncourt.books) > 8:
+                            nb = 8;
+                        elif len(goncourt.books) > 4:
+                            nb = 4;
+                        else:
+                            nb = 1;
+                        goncourt.books = President.announce_vote(goncourt.books, nb)
                         print("\n\n-----------------------------------------------")
                         print("Voici les livre que vous avez selectionés : ")
                         for book in goncourt.books:

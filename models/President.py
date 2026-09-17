@@ -13,13 +13,15 @@ class President(User):
         print(f" Name: {self.first_name}")
         print(f" Email: {self.email}")
 
-    def announce_vote(self, books : list[Book], nb : int) -> list[Book]:
-        book_announce = list[Book]
+    @staticmethod
+    def announce_vote(books : list[Book], nb : int) -> list[Book]:
+        book_announce = []
         while len(book_announce) < nb:
             for book in books:
+                print(book)
                 choice = input("Saisie le choix de vote o/n")
                 if choice == "o":
-                    book_announce.add(book)
+                    book_announce.append(book)
         return book_announce
 
     @staticmethod

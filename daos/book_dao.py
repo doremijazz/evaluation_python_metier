@@ -1,3 +1,5 @@
+"""Persistance des livres de leur auteur."""
+
 from dataclasses import dataclass
 from typing import Optional
 
@@ -10,7 +12,11 @@ from models.Person import Person
 
 @dataclass
 class BookDao(Dao[Book]):
+    """Réaliser les opérations CRUD relatives aux livres."""
+
     def create(self, book: Book) -> int:
+        """Créer un livre et, si nécessaire, son auteur."""
+
         id_book = Optional[int]
         try:
             with Dao.connection.cursor() as cursor:
@@ -53,11 +59,15 @@ class BookDao(Dao[Book]):
             return 0
 
     def book_from_db(self, record)-> Book:
+        """Construire un objet ``Book`` depuis une ligne de base de données."""
+
         book : Book = Book( record["l_title"], record['l_ID_auteur'], record["l_resume"], record['l_publish_date'], record["l_editeur"], record["l_pp"], record["l_nb_pages"], record["l_isbn"], record["l_price"])
         book.id = record["l_ID_livre"]
         return book
 
     def read(self, book_id: int) -> Book:
+        """Lire un livre et remplacer son identifiant d'auteur par l'objet auteur."""
+
         book : Optional[Book]
         try:
             with Dao.connection.cursor() as cursor:
@@ -77,6 +87,8 @@ class BookDao(Dao[Book]):
 
 
     def readAll(self) -> list[Book]:
+        """Lire tous les livres avec leurs auteurs associés."""
+
         book_list : list[Book] = []
         try:
             with Dao.connection.cursor() as cursor:
@@ -96,6 +108,8 @@ class BookDao(Dao[Book]):
 
 
     def update(self, book: Book) -> bool:
+        """Mettre à jour les informations d'un livre."""
+
         try:
             with Dao.connection.cursor() as cursor:
                 sql = "UPDATE pg_livre SET l_ID_auteur=%, l_title=%,l_editeur=%s, l_resume=%s, l_pp=%s, l_nb_pages=%s, l_isbn=%s, l_price=%s WHERE l_ID_livre=%s"
@@ -110,6 +124,8 @@ class BookDao(Dao[Book]):
 
 
     def delete(self, book: Book) -> bool:
+        """Supprimer un livre à partir de son numéro."""
+
         try:
             with Dao.connection.cursor() as cursor:
                 sql = "DELETE FROM pg_livre WHERE l_ID_livre = %s"
@@ -122,6 +138,8 @@ class BookDao(Dao[Book]):
             return False
 
     def sursh(self, title: str) -> Optional[Book]:
+        """Rechercher un livre par son titre."""
+
         try:
             with Dao.connection.cursor() as cursor:
                 sql = "SELECT * FROM pg_livre WHERE l_title = %s"

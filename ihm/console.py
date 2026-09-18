@@ -8,8 +8,12 @@ from models.Member import Member
 
 
 class Console:
+    """Regrouper l'affichage des menus et la collecte des saisies utilisateur."""
+
     @staticmethod
     def principal_menu():
+        """Afficher les choix du menu principal."""
+
         print("########################\n")
         print("----- MENU PRINCIPAL ------")
         print("########################\n")
@@ -19,6 +23,8 @@ class Console:
 
     @staticmethod
     def president_menu():
+        """Afficher les actions accessibles au président."""
+
         print("##########################\n")
         print("----- MENU PRESIDENT ------")
         print("#########################\n")
@@ -30,6 +36,8 @@ class Console:
 
     @staticmethod
     def admin_menu():
+        """Afficher les actions de gestion accessibles à l'administrateur."""
+
         print("#########################\n")
         print("----- MENU ADMIN ------")
         print("#########################\n")
@@ -43,6 +51,8 @@ class Console:
 
     @staticmethod
     def member_menu():
+        """Afficher les actions accessibles à un membre du jury."""
+
         print("########################\n")
         print("----- MENU MEMBER ------")
         print("########################\n")
@@ -52,14 +62,20 @@ class Console:
 
     @staticmethod
     def message_display(message):
+        """Afficher un message transmis par une autre couche."""
+
         print(message)
 
     @staticmethod
     def choice_command():
+        """Lire et retourner un choix de menu sous forme de texte."""
+
         return input("Votre choix : \n")
 
     @staticmethod
     def login_menu():
+        """Demander les identifiants et les retourner sous forme de tuple."""
+
         print("#######################\n")
         print("----- MENU LOGIN ------")
         print("########################\n")
@@ -69,6 +85,8 @@ class Console:
 
     @staticmethod
     def member_input()-> Member:
+        """Construire un membre à partir des informations saisies."""
+
         name = input("Entrez le prénom : ")
         surname = input("Entrez le nom de famille : \n")
         age = int(input("Entrez l'age : \n"))
@@ -80,11 +98,15 @@ class Console:
 
     @staticmethod
     def member_to_delete():
+        """Demander l'identité du membre à supprimer."""
+
         name = input("Entrez le prénom du membre : ")
         surname = input("Entrez le nom de famille : ")
         return name,surname
 
     def book_input(self):
+        """Construire un livre et son auteur à partir des saisies console."""
+
         title = input("Entrez le nom du livre : ")
         author_name = input("Entrez le prénom de l'auteur : \n : ")
         author_surname = input("Entrez le nom de famille de l'auteur : \n")
@@ -103,5 +125,7 @@ class Console:
         return book
 
     def book_to_delete(self):
+        """Demander le titre du livre à supprimer."""
+
         title = input("Entrez le nom du livre : ")
         return title

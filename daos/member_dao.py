@@ -1,3 +1,6 @@
+"""Persistance des membres dans les tables personne, utilisateur et membre."""
+
+
 from dataclasses import dataclass
 from typing import Optional
 
@@ -8,7 +11,11 @@ from models.Person import Person
 
 @dataclass
 class MemberDao(Dao[Member]):
+    """Réaliser les opérations CRUD relatives aux membres du jury."""
+
     def create(self, member: Member) -> int:
+        """Créer les lignes personne, utilisateur et membre atomiquement."""
+
         id_member : Optional[int]
         id_user : int
         id_person : int
@@ -44,11 +51,15 @@ class MemberDao(Dao[Member]):
             return 0
 
     def member_from_db(self, record)-> Member:
+        """Construire un objet Member."""
+
         member : Member = Member(record['p_surname'], record['p_name'], record['p_age'], record['u_email'], record['u_pasword'], record['u_statut'] )
         member.member_nbr = record['m_ID_membre']
         return member
 
     def read(self, member_id: int) -> Member:
+        """Lire un membre à partir de son identifiant."""
+
         member : Optional[Member]
         try:
             with Dao.connection.cursor() as cursor:
@@ -64,6 +75,8 @@ class MemberDao(Dao[Member]):
             print(f"Erreur lors de la lecture du membre : {e}")
 
     def readAll(self) -> list[Member]:
+        """Lire tous les membres avec leur identité et leurs accès."""
+
         member_list : list[Member] = []
         try:
             with Dao.connection.cursor() as cursor:
@@ -77,6 +90,8 @@ class MemberDao(Dao[Member]):
             print(f"Erreur lors de la lecture des membres : {e}")
 
     def update(self, member: Member) -> bool:
+        """Mettre à jour les données personnelles et d'accès d'un membre."""
+
         try:
             with Dao.connection.cursor() as cursor:
                 sql_person = ("UPDATE pg_person P JOIN pg_user U ON U.p_ID_person = P.p_ID_person JOIN "
@@ -90,6 +105,8 @@ class MemberDao(Dao[Member]):
             return False
 
     def delete(self, member: Member) -> bool:
+        """Supprimer les trois lignes constituant un membre."""
+
         try:
             with Dao.connection.cursor() as cursor:
                 sql_selec_person = ("SELECT P.p_ID_person FROM pg_person AS P "
@@ -130,6 +147,8 @@ class MemberDao(Dao[Member]):
             return False
 
     def sursh(self, name: str, surname : str) -> Optional[Member]:
+        """Rechercher un membre par prénom et nom."""
+
         try:
             with Dao.connection.cursor() as cursor:
                 sql = "SELECT * FROM pg_membre INNER JOIN pg_user INNER JOIN pg_person WHERE p_first_name = %s AND p_last_name = %s"

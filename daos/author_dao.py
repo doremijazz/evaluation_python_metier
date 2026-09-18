@@ -1,3 +1,4 @@
+"""Persistance des auteurs dans les tables personne et auteur."""
 from typing import Optional
 
 from daos.dao import Dao
@@ -6,7 +7,10 @@ from models.Person import Person
 
 
 class AuthorDao(Dao[Author]):
+    """Réaliser les opérations CRUD relatives aux auteurs."""
+
     def create(self, author : Author) -> int:
+        """Créer la personne et l'auteur dans une même transaction."""
         id_author : Optional[int]
         id_person : int
         try:
@@ -30,10 +34,14 @@ class AuthorDao(Dao[Author]):
             return 0
 
     def author_from_db(self, record)->Author:
+        """Construire un objet ``Author`` depuis une ligne issue de la base."""
+
         author: Author = Author(record['p_surname'], record['p_name'], record['p_age'], record["aut_bio"])
         return author
 
     def read(self, id_author: int) -> Author:
+            """Lire un auteur à partir de son identifiant."""
+
             author : Optional[Author]
 
             try:
@@ -53,6 +61,8 @@ class AuthorDao(Dao[Author]):
                 print(f"Erreur lors de la lecture de l'auteur: {e}")
 
     def readAll(self) -> list[Author]:
+        """Lire tous les auteurs enregistrés."""
+
         author_list:list[Author] = []
         try :
             with Dao.connection.cursor() as cursor:
@@ -66,6 +76,8 @@ class AuthorDao(Dao[Author]):
             print(f"Erreur lors de la lecture de tous les auteurs : {e}")
 
     def update(self, author : Author) -> bool:
+        """Mettre à jour l'identité et la biographie d'un auteur."""
+
         try :
             with Dao.connection.cursor() as cursor:
                 sql_person ="UPDATE pg_person P JOIN pg_author A ON A.p_ID_person = P.p_ID_person SET P.p_surname = %s, P.p_name = %s, P.p_age = %s, A.aut_bio = % WHERE A.aut_ID_auteur = %s"
@@ -79,6 +91,8 @@ class AuthorDao(Dao[Author]):
 
 
     def delete(self, author : Author) -> bool:
+        """Supprimer un auteur puis la personne qui lui est associée."""
+
         try :
             with Dao.connection.cursor() as cursor:
                 #print("debut delete auteur")
@@ -117,5 +131,3 @@ class AuthorDao(Dao[Author]):
             Dao.connection.rollback()
             return False
 
-
-        ...

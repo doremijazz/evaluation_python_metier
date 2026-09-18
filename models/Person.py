@@ -19,7 +19,11 @@ class Person(ABC):
 
     @abstractmethod
     def display(self):
+        """Afficher les informations de la personne dans la console."""
+
         pass
 
     def __str__(self):
+        """Retourner l'identité de la personne."""
+
         return f"{self.first_name} {self.last_name}, {self.age} ans"

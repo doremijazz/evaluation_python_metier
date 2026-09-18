@@ -1,9 +1,9 @@
-import email
-import msvcrt
+"""Point d'entrée de l'application console de gestion du prix Goncourt."""
+
+
 import os
 
 from Business.goncourt import Goncourt
-from daos.member_dao import MemberDao
 from models.Book import Book
 from models.Member import Member
 from ihm.console import Console
@@ -11,6 +11,7 @@ from models.President import President
 
 
 def main() -> None:
+    """Initialiser les données puis exécuter la boucle des menus interactifs."""
     goncourt : Goncourt = Goncourt()
     print("Goncourt")
     print("-------------------------\n"

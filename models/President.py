@@ -1,3 +1,5 @@
+"""Modèle du président du jury et opérations liées aux résultats."""
+
 from dataclasses import dataclass, field
 from typing import ClassVar
 
@@ -6,8 +8,12 @@ from models.User import User
 
 @dataclass
 class President(User):
+    """Représenter le président chargé de saisir et d'annoncer les votes."""
+
 
     def display(self):
+        """Afficher l'identité et le courriel du président."""
+
         print(f" ID: {self.user_id}")
         print(f" Surname: {self.last_name}")
         print(f" Name: {self.first_name}")
@@ -15,6 +21,15 @@ class President(User):
 
     @staticmethod
     def announce_vote(books : list[Book], nb : int) -> list[Book]:
+        """Faire annoncer les livres annoncés pour le tour suivant.
+
+        Args:
+            books: Livres pouvant être annoncés.
+            nb: Nombre de livres à retenir.
+
+        Returns:
+            Livres confirmés par le président.
+        """
         book_announce = []
         while len(book_announce) < nb:
             for book in books:
@@ -26,6 +41,14 @@ class President(User):
 
     @staticmethod
     def enter_vote(books: list[Book]) -> list[Book]:
+        """Saisir les votes puis classer les livres par résultat décroissant.
+
+        Args:
+            books: Livres soumis au vote.
+
+        Returns:
+            Nouvelle liste classée du plus au moins de votes.
+        """
         print(f"Nombre de livres : {len(books)}")
         book_votes = {}
 

@@ -40,6 +40,7 @@ class Goncourt:
         self.books.append(book)
 
     def add_book_to_db(self,book:Book)->bool:
+        """Créer un livre en base et signaler la réussite de l'opération."""
         try:
             book_dao : BookDao = BookDao()
             book_dao.create(book)
@@ -49,6 +50,7 @@ class Goncourt:
             return False
 
     def sursh_book_in_db(self, title :str)-> Optional[Book]:
+        """Rechercher un livre en base par titre."""
         try :
             book_dao : BookDao = BookDao()
             book : Book = book_dao.sursh(title)
@@ -59,6 +61,7 @@ class Goncourt:
 
 
     def update_book_to_db(self,book:Book)->bool:
+        """Mettre à jour un livre en base."""
         try:
             book_dao : BookDao = BookDao()
             book_dao.update(book)
@@ -68,13 +71,16 @@ class Goncourt:
             return False
 
     def add_author(self,author:Author):
+        """Ajouter un auteur à la collection en mémoire."""
         self.authors.append(author)
 
     def add_member(self,member:Member):
+        """Ajouter un membre à la collection en mémoire."""
         self.members.append(member)
 
     @staticmethod
     def add_meber_to_db (menber : Member) -> bool:
+        """Créer un membre en base."""
         try :
             menber_dao : MemberDao = MemberDao()
             menber_dao.create(menber)
@@ -85,6 +91,7 @@ class Goncourt:
 
     @staticmethod
     def update_member_in_db(member : Member)-> bool:
+        """Mettre à jour un membre en base."""
         try:
             member_dao : MemberDao = MemberDao()
             member_dao.update(member)
@@ -95,6 +102,7 @@ class Goncourt:
 
     @staticmethod
     def delete_member_to_db (member : Member) -> bool:
+        """Supprimer un membre de la base."""
         try:
             member_dao : MemberDao = MemberDao()
             member_dao.delete(member)
@@ -104,6 +112,7 @@ class Goncourt:
 
     @staticmethod
     def sursh_member(name, surname)-> Optional[Member]:
+        """Rechercher un membre par son identité."""
         try :
             member_dao : MemberDao = MemberDao()
             member = member_dao.sursh(name, surname)
@@ -113,6 +122,7 @@ class Goncourt:
 
 
     def get_author(author_nbr : int)->Optional[Author]:
+        """Retourner l'auteur correspondant à un identifiant de base."""
         author_dao : AuthorDao = AuthorDao()
         return author_dao.read(author_nbr)
 
@@ -142,6 +152,7 @@ class Goncourt:
 
 
     def test_author_dao(self) -> None:
+        """Exécuter manuellement un scénario création/lecture/suppression d'auteur."""
 
         print("_______________________________________ \n"
         "TEST AUTEUR DAO\n"
@@ -176,6 +187,8 @@ class Goncourt:
         Author.author_id -=1
 
     def test_member_dao(self) -> None:
+        """Exécuter manuellement un scénario création/lecture/suppression de membre."""
+
         print("_______________________________________ \n"
                 "TEST MEMBRE DAO\n"
                 "_______________________________________ \n\n")
@@ -206,6 +219,8 @@ class Goncourt:
         Member.member_id -= 1
 
     def test_book_dao(self)->None:
+        """Exécuter manuellement un scénario création/lecture/suppression de livre."""
+
         print("_______________________________________ \n"
               "TEST BOOK DAO\n"
               "_______________________________________ \n\n")
@@ -633,6 +648,7 @@ class Goncourt:
 
 
     def init_db(self):
+        """Initialiser les compteurs puis charger les collections depuis la base."""
 
         Book_dao : BookDao = BookDao()
         Author_dao : AuthorDao = AuthorDao()
@@ -650,5 +666,14 @@ class Goncourt:
 
 
     def connection(self, email : str, pasword : str) -> str:
+        """Authentifier un utilisateur et retourner son statut.
+
+        Args:
+            email: Courriel saisi dans le formulaire console.
+            pasword: Mot de passe saisi (orthographe historique conservée).
+
+        Returns:
+            Statut trouvé en base, ou None en cas d'échec.
+        """
         status : ConnectionDao = ConnectionDao.sursh_status(email, pasword)
         return status
